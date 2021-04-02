@@ -1,0 +1,41 @@
+{% extends "RegRepl/index.html"%}
+
+{%block body%}
+<form class="" action="" method="post">
+  {%csrf_token%}
+
+  <div class="onstufftable">
+    <h2>По штатному расписанию</h2>
+    <p>{{form.name.label}}</p>
+      <p>{{form.name}}</p>
+
+    <p>{{form.dir.label}}</p>
+      <p>{{form.dir}}</p>
+
+    <p>{{form.dep.label}}</p>
+      <p>{{form.dep}}</p
+
+    <p>{{form.subdep.label}}</p>
+      <p>{{form.subdep}}</p
+
+    <p>{{form.units.label}}</p>
+      <p>{{form.units}}</p
+
+    <p>{{form.level.label}}</p>
+      <p>{{form.level}}</p
+
+        <p>{{form.cat.label}}</p>
+          <p>{{form.cat}}</p>
+
+    <p>{{form.payment.label}}</p>
+      <p>{{form.payment}}</p>
+
+      <p>{{form.salary.label}}</p>
+        <p>{{form.salary}}</p>
+  </div>
+
+
+
+  <input type="submit" name="" value="ОК">
+</form>
+{%endblock%}

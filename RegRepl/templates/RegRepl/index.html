@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'css\style.css'%}">
+  <title>{%block title%}Штатное замещение{%endblock%}</title>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>{%block header%}Штатное замещение{%endblock%}</h1>
+    </div>
+  </header>
+  {%block body%}
+  <div class="container main">
+  <a class="button" href="#">Создать на текущюю дату</a>
+
+    <table class="RegRepl_table">
+
+
+      <thead>
+        <th>Период</th>
+      </thead>
+      <tbody>
+      {% for reg in RegRepls %}
+        <tr class="notcaption" onclick="return location.href = '{% url 'regrepl' id=reg.id%}' ">
+            <td>{{reg.duration|date:"d.m.Y"}}</td>
+          </tr>
+        {%endfor%}
+      </tbody>
+
+    </table>
+
+
+  </div>
+
+
+  {%endblock%}
+</body>
+</html>
