@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('regrepl/create/<int:id>', views.regrepl_create, name='regrepl'),
     path('regrepl/item/upd/<int:id>', views.regpos_update, name='regpos_upd'),
+    path('new/', views.regrepl_copy, name='regrepl_copy'),
 
 ]

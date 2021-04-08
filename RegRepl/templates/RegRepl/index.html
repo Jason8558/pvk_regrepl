@@ -16,18 +16,20 @@
   </header>
   {%block body%}
   <div class="container main">
-  <a class="button" href="#">Создать на текущюю дату</a>
+  <a class="button" href="{% url 'regrepl_copy'%}">Создать на текущюю дату</a>
 
     <table class="RegRepl_table">
 
 
       <thead>
         <th>Период</th>
+        <th>Территория</th>
       </thead>
       <tbody>
       {% for reg in RegRepls %}
         <tr class="notcaption" onclick="return location.href = '{% url 'regrepl' id=reg.id%}' ">
             <td>{{reg.duration|date:"d.m.Y"}}</td>
+            <td>{{reg.location}}</td>
           </tr>
         {%endfor%}
       </tbody>

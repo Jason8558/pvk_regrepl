@@ -3,6 +3,28 @@
   font-family: Roboto;
 }
 
+input, select {
+height: 22px;
+border: 3px solid green;
+text-align: center;
+border-radius: 13px;
+float: right;
+}
+
+input:focus, select:focus {
+outline: none;
+box-shadow: 0px 0px 4px 0px green;
+transition: 0.3s;
+}
+
+#id_employer1, #id_employer2, #id_employer3 {
+width: 400px;
+}
+
+#id_subdep {
+  width: 201px;
+}
+
 body {
   background: #f5fff5;
 }
@@ -16,6 +38,16 @@ header {
 border-radius: 29px;
 box-shadow: 0px 0px 9px 0px #00B358;
 padding: 1em;
+}
+
+.button-back {
+float: right;
+background: red;
+padding: 11px;
+font-size: 11pt;
+color: black;
+text-decoration: none;
+border-radius: 12px;
 }
 
 header div {
@@ -53,7 +85,7 @@ header div {
 
 table {
 width: 100%;
-margin: 0 auto;
+margin: 10px auto;
 border-collapse: collapse;
 border: 1px solid black;
 background: #ffffff;
@@ -67,9 +99,30 @@ table {
   cursor: pointer;
 }
 
+.itogo {
+background: #cafff1;
+font-weight: bold;
+font-size: 12pt;
+}
+
+.diritogo {
+background: #3b55e4;
+color: white;
+font-weight: 500;
+font-size: 12pt;
+}
+
+.all_itog {
+background: greenyellow;
+font-size: 14pt;
+font-weight: bolder;
+}
+
 .notcaption:hover {
   cursor: pointer;
-  background:lightgreen;
+  /* background:lightgreen; */
+  color: blue !important;
+  text-decoration: underline;
 }
 
 thead td {
@@ -121,4 +174,46 @@ thead {
 td {
 border: 1px solid black;
 text-align: center;
+}
+
+.posupd {
+width: 70%;
+margin: 0 auto;
+}
+
+.posupd div {
+background: #d1ffd1;
+margin-top: 16px;
+padding: 10px;
+border: 5px solid #228653;
+border-radius: 30px 0px;
+/* height: 290px; */
+}
+
+.onstufftable {
+
+}
+
+.onstufftable h2,  .onregrepl h2{
+ text-align: center;
+ border-bottom: 1px solid;
+}
+
+.ost_container, .orr_container {
+  grid-template-columns: 50% 50%;
+  display: grid;
+  background: none !important;
+  border: none !important;
+  grid-gap: 15px;
+}
+
+.formsubmit {
+width: 285px;
+height: 29px;
+background: greenyellow;
+font-weight: bold;
+}
+
+.onregrepl {
+height: 301px;
 }

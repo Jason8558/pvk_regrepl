@@ -1,41 +1,66 @@
 {% extends "RegRepl/index.html"%}
-
+{%block header%}{{pos.name}} - {{pos.employer1}} {% if pos.free %}Ставка свободна{%endif%}{%endblock%}
+{%block title%}{{pos.name}}{%endblock%}
 {%block body%}
-<form class="" action="" method="post">
+<form class="posupd"  method="post">
   {%csrf_token%}
 
   <div class="onstufftable">
+
     <h2>По штатному расписанию</h2>
-    <p>{{form.name.label}}</p>
-      <p>{{form.name}}</p>
+<div class="ost_container">
+    <p style="visibility: hidden;" ><span>{{form.bound_regrepl.label}}</span><span>{{form.bound_regrepl}}</span> </p>
 
-    <p>{{form.dir.label}}</p>
-      <p>{{form.dir}}</p>
+    <p><span>{{form.name.label}}</span> <span>{{form.name}}</span></p>
 
-    <p>{{form.dep.label}}</p>
-      <p>{{form.dep}}</p
+    <p><span>{{form.dir.label}}</span><span>{{form.dir}}</span> </p>
 
-    <p>{{form.subdep.label}}</p>
-      <p>{{form.subdep}}</p
+    <p><span>{{form.dep.label}}</span><span>{{form.dep}}</span> </p>
 
-    <p>{{form.units.label}}</p>
-      <p>{{form.units}}</p
+    <p><span>{{form.subdep.label}}</span><span>{{form.subdep}}</span></p>
 
-    <p>{{form.level.label}}</p>
-      <p>{{form.level}}</p
+    <p><span>{{form.units.label}}</span><span>{{form.units}}</span></p>
 
-        <p>{{form.cat.label}}</p>
-          <p>{{form.cat}}</p>
+    <p><span>{{form.level.label}}</span><span>{{form.level}}</span></p>
 
-    <p>{{form.payment.label}}</p>
-      <p>{{form.payment}}</p>
+    <p><span>{{form.cat.label}}</span><span>{{form.cat}}</span></p>
 
-      <p>{{form.salary.label}}</p>
-        <p>{{form.salary}}</p>
+    <p><span>{{form.payment.label}}</span><span>{{form.payment}}</span></p>
+
+    <p><span>{{form.salary.label}}</span><span>{{form.salary}}</span></p>
+
   </div>
+</div>
+  <div class="onregrepl">
+    <h2>По штатному замещению</h2>
+<div class="orr_container">
+
+    <p><span>{{form.units_rr.label}}</span><span>{{form.units_rr}}</span></p>
+
+    <p><span>{{form.level_rr.label}}</span><span>{{form.level_rr}}</span></p>
+
+    <p><span>{{form.cat_rr.label}}</span><span>{{form.cat_rr}}</span></p>
+
+    <p><span>{{form.payment_rr.label}}</span><span>{{form.payment_rr}}</span></p>
+
+    <p><span>{{form.salary_rr.label}}</span><span>{{form.salary_rr}}</span></p>
+
+    <p>{{form.free.label}}{{form.free}}</p>
+
+    <p><span>{{form.employer1.label}}</span><span>{{form.employer1}}</span></p>
+
+    <p><span>{{form.employer2.label}}</span><span>{{form.employer2}}</span></p>
+
+    <p><span>{{form.employer3.label}}</span><span>{{form.employer3}}</span></p>
+
+    <p><span>{{form.comm.label}}</span><span>{{form.comm}}</span></p>
+
+  </div>
+  <input class="formsubmit"  type="submit" name="" value="ОК">
+  <a onclick="window.close()" href="#">Отмена</a>
+{{form.errors}}
 
 
 
-  <input type="submit" name="" value="ОК">
 </form>
 {%endblock%}
