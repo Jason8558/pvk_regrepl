@@ -2,6 +2,21 @@ from django import forms
 from .models import *
 from django.contrib.auth.forms import AuthenticationForm
 import datetime as DT
+from django.contrib.auth.forms import AuthenticationForm
+
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserLoginForm, self).__init__(*args, **kwargs)
+
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'lform-input loginField', 'placeholder': '', 'id': 'hello'}))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'lform-input pwdField',
+            'placeholder': '',
+            'id': 'hi',
+        }
+))
 
 class RegularReplacementPos_form(forms.ModelForm):
     class Meta:
