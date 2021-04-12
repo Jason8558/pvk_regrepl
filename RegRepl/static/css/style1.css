@@ -54,6 +54,7 @@ header div {
 height: min-content;
 }
 
+
 .container {
 width: 94%;
 margin: 0 auto;
@@ -103,6 +104,10 @@ table {
 border-collapse: collapse;
 border: 1px solid black;
 background: #ffffff;
+}
+
+.rc_employer {
+  text-align: left !important;
 }
 
 .verticalrow {
