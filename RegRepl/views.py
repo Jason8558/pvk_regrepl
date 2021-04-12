@@ -12,8 +12,8 @@ from collections import defaultdict
 
 def index(request):
     RegRepls = RegularReplacement.objects.all()
-
-    return render(request,'RegRepl/index.html', context={'RegRepls':RegRepls})
+    locations = Location.objects.all()
+    return render(request,'RegRepl/index.html', context={'RegRepls':RegRepls, 'locs':locations})
 
 def regrepl_create(request, id):
     RegRepl = RegularReplacement.objects.get(id=id)
@@ -116,9 +116,6 @@ def regrepl_create(request, id):
 'd_units_rr':d_units_rr,
     'd':d,'count':count, 'rr':RegRepl, 'positions':notinsectors, 'insectors':insectors, 'dirs':dirs, 'deps':deps, 'subdeps':subdeps})
 
-
-
-
 def regpos_update(request, id):
     # if request.user.is_authenticated:
     if request.method == "GET":
@@ -137,13 +134,15 @@ def regpos_update(request, id):
             print(bound_form.errors.as_data())
 
 def regrepl_copy(request):
+    location = request.POST.get('loc', '')
+    print('loc= ' + location)
     # if request.user.is_authenticated:
-    regrepl = RegularReplacement.objects.latest('id')
+    regrepl = RegularReplacement.objects.filter(location_id=location).latest('id')
     old_regrepl = regrepl.id
     regrepl.id = None
     regrepl.duration = DT.datetime.now()
     regrepl.save()
-    new_rr = RegularReplacement.objects.latest('id')
+    new_rr = RegularReplacement.objects.filter(location_id=location).latest('id')
 
     items_sub = RegularReplacementPos.objects.filter(bound_regrepl=old_regrepl)
 

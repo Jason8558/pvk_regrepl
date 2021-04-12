@@ -12,6 +12,17 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+    migrations.CreateModel(
+        name='Location',
+        fields=[
+            ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+            ('name', models.CharField(max_length=256, verbose_name='Наименование ')),
+        ],
+        options={
+            'verbose_name': 'Территория',
+            'ordering': ['id'],
+        },
+    ),
         migrations.CreateModel(
             name='Departament',
             fields=[

@@ -1,14 +1,21 @@
 from django.db import models
 
+class Location(models.Model):
+    name = models.CharField(verbose_name='Наименование ', max_length=256,)
+    class Meta:
+        ordering = ["id"]
+        verbose_name = 'Территория'
+
+    def __str__(self):
+        fullname = self.name
+        return fullname
+
 class RegularReplacement(models.Model):
-    LOCATION_CHOICES = [
-        ('Головное предприятие', 'Головное предприятие'),
-        ('Филиал "Центральный"', 'Филиал "Центральный'),
 
 
-    ]
+
     duration = models.DateField(help_text="Введите дату" , verbose_name='Дата', db_index=True)
-    location = models.CharField(choices=LOCATION_CHOICES,verbose_name='Территория ', max_length=256, default='Головное предприятие')
+    location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256,default='1')
 
     class Meta:
         ordering = ["id"]
@@ -24,6 +31,7 @@ class RegularReplacement(models.Model):
 class DirDepartament(models.Model):
     name = models.CharField(max_length=256,  help_text="Введите название дирекции", verbose_name="Название дирекции ", db_index=True)
     dep = models.ManyToManyField('Departament', blank=True,verbose_name = 'Подразделения ')
+    location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256,  default='1')
     class Meta:
         ordering = ["id"]
         verbose_name = 'Дирекция'
@@ -36,6 +44,7 @@ class DirDepartament(models.Model):
 class Departament(models.Model):
     name = models.CharField(max_length=256,  help_text="Введите название подразделения", verbose_name="Название подразделения ", db_index=True)
     subdep = models.ManyToManyField('SubDepartament',blank=True, verbose_name = 'Cубподразделения ')
+    location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256,default='1')
 
     class Meta:
         ordering = ["id"]
@@ -48,6 +57,7 @@ class Departament(models.Model):
 
 class SubDepartament(models.Model):
     name = models.CharField(max_length=256,  help_text="Введите название субподразделения", verbose_name="Название субподразделения ", db_index=True)
+    location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256, default='1')
 
 
     class Meta:

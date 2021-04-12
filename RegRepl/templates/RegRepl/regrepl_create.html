@@ -1,6 +1,6 @@
 {% extends "RegRepl/index.html"%}
 {% load humanize %}
-{%block header%}Штатное замещение за {{rr.duration|date:"d.m.Y"}} | <span style="font-size: 12pt;">Штат в количестве: <span style="color:blue;">{{count}}</span> едениц</span> <a href="/" class="button-back">Х</a>{%endblock%}
+{%block header%}Штатное замещение за {{rr.duration|date:"d.m.Y"}} | <span style="font-size: 12pt;">Штат в количестве: <span style="color:blue;">{{count}}</span> единиц</span> <a href="/" class="button-back">Х</a>{%endblock%}
 {%block body%}
 <div class="container regrepl">
 
@@ -36,6 +36,7 @@
 
   <tbody>
 {% for dir in dirs%}
+  {%if dir.location == rr.location%}
   <tr class="dir">
   <td colspan="17">{{dir.name}}</td>
   </tr>
@@ -311,6 +312,7 @@
 <td></td>
 
   </tr>
+  {%endif%}
 {%endfor%}
 
 <tr class="all_itog"><td>Итого по {{rr.location}}</td>

@@ -16,7 +16,18 @@
   </header>
   {%block body%}
   <div class="container main">
-  <a class="button" href="{% url 'regrepl_copy'%}">Создать на текущюю дату</a>
+
+    <form class="newrr" action="{% url 'regrepl_copy'%}" method="post">
+      <h4>Создать на текущюю дату</h4>
+        {%csrf_token%}
+      <select class="" name="loc">
+        {% for loc in locs %}
+        <option value="{{loc.id}}">{{loc.name}}</option>
+      {%endfor%}
+      </select>
+      <input type="submit" value="Создать">
+    </form>
+
 
     <table class="RegRepl_table">
 

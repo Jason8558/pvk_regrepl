@@ -59,11 +59,25 @@ header div {
 margin: 0 auto;
 }
 
+.newrr {
+/* border: 1px solid; */
+padding: 7px;
+border: 4px solid #228653;
+}
+
+.newrr input, .newrr select{
+    float: left;
+    margin-right: 14px;
+    font-size: 12pt;
+    height: max-content;
+    margin-top: 10px;
+}
+
 .main {
 display: grid;
-grid-template-columns: 50% 50%;
+grid-template-columns: 100%;
 grid-gap: 22px;
-width: 90%;
+width: 64%;
 margin: 0 auto;
 }
 
