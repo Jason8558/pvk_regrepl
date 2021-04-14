@@ -236,3 +236,26 @@ td {
 .onregrepl {
 height: 301px;
 }
+
+.search_button {
+
+}
+
+.search_menu {
+background: white;
+border: 2px solid red;
+position: absolute;
+width: 681px;
+height: 172px;
+left: 831px;
+z-index: 1;
+}
+
+.search_menu select, input {
+
+    float: none;
+}
+
+#depsearch {
+
+}

@@ -1,6 +1,37 @@
 {% extends "RegRepl/index.html"%}
 {% load humanize %}
-{%block header%}Штатное замещение за {{rr.duration|date:"d.m.Y"}} | <span style="font-size: 12pt;">Штат в количестве: <span style="color:blue;">{{count}}</span> единиц</span> <a href="/" class="button-back">Х</a>{%endblock%}
+{%block header%}Штатное замещение за {{rr.duration|date:"d.m.Y"}} |
+<span style="font-size: 12pt;">Штат в количестве: <span style="color:blue;">{{count}}</span> единиц</span>
+<a class="search_button" href="#">Поиск</a>
+<div class="search_menu">
+  <form action="{% url 'regrepl' id=rr.id %}" method="get">
+    {% csrf_token %}
+    <select class="" name="">
+      <option value="dir">По дирекции</option>
+      <option value="dep">По отделу</option>
+    </select>
+
+    <select class="" name="dir_search">
+      <option value="">Выберите дирекцию</option>
+      {% for dir in dirs%}
+        {% if dir.location == rr.location %}
+        <option value="{{dir.id}}">{{dir.name}}</option>
+        {%endif%}
+      {%endfor%}
+    </select>
+  <select id="depsearch" name="dep_search">
+        <option value="">Выберите отдел</option>
+    {% for dep in deps%}
+      {% if dep.location == rr.location %}
+      <option value="{{dep.id}}">{{dep.name}}</option>
+      {%endif%}
+    {%endfor%}
+  </select>
+
+<input type="submit" name="" value="Найти">
+  </form>
+</div>
+ <a href="/" class="button-back">Х</a>{%endblock%}
 {%block body%}
 <div class="container regrepl">
 
@@ -52,14 +83,14 @@
 <td>{{pos.name}}</td>
 <td>{{pos.units|floatformat}}</td>
 <td>{{pos.level}}</td>
-{% if pos.cat == "РУК"%}
-<td style="color: red;font-weight: bold;">{{pos.cat}}</td>
+{% if pos.cat.id == "1"%}
+<td style="color: red;font-weight: bold;">{{pos.cat.name}}</td>
 {%endif%}
-{% if pos.cat == 'СПЕЦ'%}
-<td style="color: hotpink;font-weight: bold;">{{pos.cat}}</td>
+{% if pos.cat.id == '2'%}
+<td style="color: hotpink;font-weight: bold;">{{pos.name}}</td>
 {%endif%}
-{% if pos.cat == 'РАБ'%}
-<td style="color: blue;font-weight: bold;">{{pos.cat}}</td>
+{% if pos.cat.id == '3'%}
+<td style="color: blue;font-weight: bold;">{{pos.name}}</td>
 {%endif%}
 <td>{{pos.payment}}</td>
 <td>{{pos.salary|intcomma}}</td>
@@ -89,28 +120,28 @@
 <td>{{pos.name}}</td>
 <td>{{pos.units|floatformat}}</td>
 <td>{{pos.level}}</td>
-{% if pos.cat == "РУК"%}
-<td style="color: red;font-weight: bold;">{{pos.cat}}</td>
+{% if pos.cat.id == 1%}
+<td style="color: red;font-weight: bold;">{{pos.cat.name}}</td>
 {%endif%}
-{% if pos.cat == 'СПЕЦ'%}
-<td style="color: hotpink;font-weight: bold;">{{pos.cat}}</td>
+{% if pos.cat.id == 2%}
+<td style="color: hotpink;font-weight: bold;">{{pos.cat.name}}</td>
 {%endif%}
-{% if pos.cat == 'РАБ'%}
-<td style="color: blue;font-weight: bold;">{{pos.cat}}</td>
+{% if pos.cat.id == 3%}
+<td style="color: blue;font-weight: bold;">{{pos.cat.name}}</td>
 {%endif%}
 <td>{{pos.payment}}</td>
 <td>{{pos.salary|intcomma}}</td>
 <td>{{pos.salary|intcomma}}</td>
 <td>{{pos.units_rr|floatformat}}</td>
 <td>{{pos.level_rr}}</td>
-{% if pos.cat_rr == "РУК"%}
-<td style="color: red;font-weight: bold;">{{pos.cat_rr}}</td>
+{% if pos.cat_rr.id == 1%}
+<td style="color: red;font-weight: bold;">{{pos.cat_rr.name}}</td>
 {%endif%}
-{% if pos.cat_rr == 'СПЕЦ'%}
-<td style="color: hotpink;font-weight: bold;">{{pos.cat_rr}}</td>
+{% if pos.cat_rr.id == 2%}
+<td style="color: hotpink;font-weight: bold;">{{pos.cat_rr.name}}</td>
 {%endif%}
-{% if pos.cat_rr == 'РАБ'%}
-<td style="color: blue;font-weight: bold;">{{pos.cat_rr}}</td>
+{% if pos.cat_rr.id == 3%}
+<td style="color: blue;font-weight: bold;">{{pos.cat_rr.name}}</td>
 {%endif%}
 <td>{{pos.payment_rr}}</td>
 <td>{{pos.salary_rr|intcomma}}</td>
@@ -136,29 +167,31 @@
               <td>{{is.name}}</td>
               <td>{{is.units|floatformat}}</td>
               <td>{{is.level}}</td>
-              {% if is.cat == "РУК"%}
-                <td style="color: red;font-weight: bold;">{{is.cat}}</td>
+              {% if is.cat.id == 1%}
+              <td style="color: red;font-weight: bold;">{{is.cat.name}}</td>
               {%endif%}
-              {% if is.cat == 'СПЕЦ'%}
-                <td style="color: hotpink;font-weight: bold;">{{is.cat}}</td>
+              {% if is.cat.id == 2%}
+              <td style="color: hotpink;font-weight: bold;">{{is.cat.name}}</td>
               {%endif%}
-              {% if is.cat == 'РАБ'%}
-                <td style="color: blue;font-weight: bold;">{{is.cat}}</td>
+              {% if is.cat.id == 3%}
+              <td style="color: blue;font-weight: bold;">{{is.cat.name}}</td>
               {%endif%}
+
               <td>{{is.payment}}</td>
               <td>{{is.salary|intcomma}}</td>
               <td>{{is.salary|intcomma}}</td>
               <td>{{is.units_rr|floatformat}}</td>
               <td>{{is.level_rr}}</td>
-              {% if is.cat_rr == "РУК"%}
-                <td style="color: red;font-weight: bold;">{{is.cat_rr}}</td>
+              {% if is.cat_rr.id == 1%}
+              <td style="color: red;font-weight: bold;">{{is.cat_rr.name}}</td>
               {%endif%}
-              {% if is.cat_rr == 'СПЕЦ'%}
-                <td style="color: hotpink;font-weight: bold;">{{is.cat_rr}}</td>
+              {% if is.cat_rr.id == 2%}
+              <td style="color: hotpink;font-weight: bold;">{{is.cat_rr.name}}</td>
               {%endif%}
-              {% if is.cat_rr == 'РАБ'%}
-                <td style="color: blue;font-weight: bold;">{{is.cat_rr}}</td>
+              {% if is.cat_rr.id == 3%}
+              <td style="color: blue;font-weight: bold;">{{is.cat_rr.name}}</td>
               {%endif%}
+
               <td>{{is.payment_rr}}</td>
               <td>{{is.salary_rr|intcomma}}</td>
               <td>{{is.salary_rr|intcomma}}</td>
@@ -173,28 +206,28 @@
               <td>{{is.name}}</td>
               <td>{{is.units|floatformat}}</td>
               <td>{{is.level}}</td>
-              {% if is.cat == "РУК"%}
-                <td style="color: red;font-weight: bold;">{{is.cat}}</td>
+              {% if is.cat.id == 1%}
+              <td style="color: red;font-weight: bold;">{{is.cat.name}}</td>
               {%endif%}
-              {% if is.cat == 'СПЕЦ'%}
-                <td style="color: hotpink;font-weight: bold;">{{is.cat}}</td>
+              {% if is.cat.id == 2%}
+              <td style="color: hotpink;font-weight: bold;">{{is.cat.name}}</td>
               {%endif%}
-              {% if is.cat == 'РАБ'%}
-                <td style="color: blue;font-weight: bold;">{{is.cat}}</td>
+              {% if is.cat.id == 3%}
+              <td style="color: blue;font-weight: bold;">{{is.cat.name}}</td>
               {%endif%}
               <td>{{is.payment}}</td>
               <td>{{is.salary|intcomma}}</td>
               <td>{{is.salary|intcomma}}</td>
               <td>{{is.units_rr|floatformat}}</td>
               <td>{{is.level_rr}}</td>
-              {% if is.cat_rr == "РУК"%}
-                <td style="color: red;font-weight: bold;">{{is.cat_rr}}</td>
+              {% if is.cat_rr.id == 1%}
+              <td style="color: red;font-weight: bold;">{{is.cat_rr.name}}</td>
               {%endif%}
-              {% if is.cat_rr == 'СПЕЦ'%}
-                <td style="color: hotpink;font-weight: bold;">{{is.cat_rr}}</td>
+              {% if is.cat_rr.id == 2%}
+              <td style="color: hotpink;font-weight: bold;">{{is.cat_rr.name}}</td>
               {%endif%}
-              {% if is.cat_rr == 'РАБ'%}
-                <td style="color: blue;font-weight: bold;">{{is.cat_rr}}</td>
+              {% if is.cat_rr.id == 3%}
+              <td style="color: blue;font-weight: bold;">{{is.cat_rr.name}}</td>
               {%endif%}
               <td>{{is.payment_rr}}</td>
               <td>{{is.salary_rr|intcomma}}</td>

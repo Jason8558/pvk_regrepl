@@ -19,9 +19,12 @@ def index(request):
         return redirect('/accounts/login')
 def regrepl_create(request, id):
     if request.user.is_authenticated:
+
+        dirs_search = request.GET.get('dir_search','')
+        print(dirs_search)
         RegRepl = RegularReplacement.objects.get(id=id)
-        notinsectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(subdep=None).order_by('dir').order_by('id')
-        insectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(~Q(subdep=0)).order_by('dir').order_by('id')
+        notinsectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(subdep=None).order_by('dir').order_by('cat')
+        insectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(~Q(subdep=0)).order_by('dir').order_by('cat')
         all = RegularReplacementPos.objects.filter(bound_regrepl=id)
         all_salary_itogo = 0
         all_salaryrr_itogo = 0
@@ -62,14 +65,17 @@ def regrepl_create(request, id):
             d_salary_rr[dep.id] = salaryrr_itogo
             d_units[dep.id] = units_itogo
             d_units_rr[dep.id] = unitsrr_itogo
-
-        dirs = DirDepartament.objects.all().order_by('id')
+        if dirs_search:
+            print(dirs_search)
+            dirs = DirDepartament.objects.get(id=dirs_search)
+        else:
+            dirs = DirDepartament.objects.all().order_by('id')
         dir_salary = {}
         dir_salary_rr = {}
         dir_units = {}
         dir_units_rr = {}
-        for dir in dirs:
-            positions = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(dir_id=dir.id)
+        if dirs_search:
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(dir_id=dirs_search)
             dir_salary_itogo = 0
             dir_salaryrr_itogo = 0
             dir_units_itogo = 0
@@ -82,6 +88,21 @@ def regrepl_create(request, id):
                         dir_salaryrr_itogo = dir_salaryrr_itogo + int(pos.salary_rr)
                 dir_units_itogo = dir_units_itogo + pos.units
                 dir_unitsrr_itogo = dir_unitsrr_itogo + pos.units_rr
+        else:
+            for dir in dirs:
+                positions = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(dir_id=dir.id)
+                dir_salary_itogo = 0
+                dir_salaryrr_itogo = 0
+                dir_units_itogo = 0
+                dir_unitsrr_itogo = 0
+                for pos in positions:
+                    if pos.salary != 'контракт':
+                        dir_salary_itogo = dir_salary_itogo + int(pos.salary)
+                    if pos.salary_rr != 'контракт':
+                        if pos.salary_rr:
+                            dir_salaryrr_itogo = dir_salaryrr_itogo + int(pos.salary_rr)
+                    dir_units_itogo = dir_units_itogo + pos.units
+                    dir_unitsrr_itogo = dir_unitsrr_itogo + pos.units_rr
 
             dir_salary[dir.id] = dir_salary_itogo
             dir_salary_rr[dir.id] = dir_salaryrr_itogo

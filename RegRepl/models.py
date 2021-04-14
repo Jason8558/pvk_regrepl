@@ -1,5 +1,16 @@
 from django.db import models
 
+class Category(models.Model):
+    name = models.CharField(verbose_name='Наименование ', max_length=4)
+    class Meta:
+        ordering = ["id"]
+        verbose_name = 'Категория'
+
+    def __str__(self):
+        fullname = self.name
+        return fullname
+
+
 class Location(models.Model):
     name = models.CharField(verbose_name='Наименование ', max_length=256,)
     class Meta:
@@ -45,7 +56,8 @@ class Departament(models.Model):
     name = models.CharField(max_length=256,  help_text="Введите название подразделения", verbose_name="Название подразделения ", db_index=True)
     subdep = models.ManyToManyField('SubDepartament',blank=True, verbose_name = 'Cубподразделения ')
     location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256,default='1')
-
+    iter = models.IntegerField(verbose_name = 'Порядок ', default=1)
+    united_with = models.ForeignKey('Departament', on_delete=models.CASCADE, verbose_name='Объеденить с  ', max_length=256,default='1')
     class Meta:
         ordering = ["id"]
         verbose_name = 'Подразделение'
@@ -57,7 +69,7 @@ class Departament(models.Model):
 
 class SubDepartament(models.Model):
     name = models.CharField(max_length=256,  help_text="Введите название субподразделения", verbose_name="Название субподразделения ", db_index=True)
-    location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256, default='1')
+    location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256)
 
 
     class Meta:
@@ -81,12 +93,7 @@ class Employer(models.Model):
         return fullname
 
 class RegularReplacementPos(models.Model):
-    CATEGORY_CHOICES = [
-    ('РУК', 'РУК'),
-    ('СПЕЦ', 'СПЕЦ'),
-    ('РАБ', 'РАБ'),
 
-]
     bound_regrepl = models.ForeignKey('RegularReplacement', on_delete=models.CASCADE, verbose_name="Штатное замещение ", default='None')
     name = models.CharField(max_length=256,  help_text="Введите должность", verbose_name="Название должности ", db_index=True)
     dir = models.ForeignKey('DirDepartament', on_delete=models.CASCADE, verbose_name="Дирекция ",default="None")
@@ -94,12 +101,12 @@ class RegularReplacementPos(models.Model):
     subdep = models.ForeignKey('SubDepartament', null=True, blank=True,on_delete=models.CASCADE, verbose_name="Субподразделение ", default="None")
     units = models.FloatField(max_length=256, verbose_name="Кол-во едениц по штатному расписанию ", db_index=True)
     level = models.CharField(verbose_name='Разряд по штатному расписанию',blank=True, max_length=256)
-    cat = models.CharField(choices=CATEGORY_CHOICES, verbose_name='Категория по штатному расписанию ', max_length=256)
+    cat = models.ForeignKey('Category', on_delete=models.CASCADE, verbose_name="Категория ",default="2")
     payment = models.CharField(verbose_name='Ступень оплаты по штатному расписанию', max_length=3)
     salary = models.CharField(max_length=256, verbose_name="Оклад по штатному расписанию ", db_index=True)
     units_rr = models.FloatField(max_length=256, verbose_name="Кол-во едениц по штатному замещению ", db_index=True)
     level_rr = models.CharField(verbose_name='Разряд по штатному замещению',blank=True, max_length=256)
-    cat_rr = models.CharField(choices=CATEGORY_CHOICES,verbose_name='Категория по штатному замещению ', max_length=256)
+    cat_rr =  models.ForeignKey('Category', related_name='cat_regrepl', on_delete=models.CASCADE, verbose_name="Категория по штатному замещению ",default="2")
     payment_rr = models.CharField(verbose_name='Ступень оплаты по штатному замещению', max_length=3)
     salary_rr = models.CharField(max_length=256, verbose_name="Оклад по штатному замещению ", db_index=True)
     employer1 = models.CharField(max_length=256,  verbose_name="Сотрудник 1 ", blank=True, db_index=True, default="")
