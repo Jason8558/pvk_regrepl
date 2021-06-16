@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from .models import *
 from .forms import *
 from django.shortcuts import redirect
@@ -66,7 +66,7 @@ def regrepl_create(request, id):
             d_units[dep.id] = units_itogo
             d_units_rr[dep.id] = unitsrr_itogo
         if dirs_search:
-
+        
             dirs = DirDepartament.objects.get(id=dirs_search)
 
         else:
@@ -76,10 +76,7 @@ def regrepl_create(request, id):
         dir_units = {}
         dir_units_rr = {}
         if dirs_search:
-
-            notinsectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(dir_id=dirs_search)
-            for pos in positions:
-                print(pos.name)
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(dir_id=dirs_search)
             dir_salary_itogo = 0
             dir_salaryrr_itogo = 0
             dir_units_itogo = 0
@@ -212,64 +209,7 @@ def regrepl_copy(request):
         return redirect('/')
     else:
         return redirect('/accounts/login')
-def regrepl_search_dir(request, dir, rr):
-    if request.user.is_authenticated:
-        dir = DirDepartament.objects.get(id=dir)
-        deps = Departament.objects.filter(departament=dir.id)
-        positions = RegularReplacementPos.objects.filter(dir=dir).filter(subdep=None).filter(bound_regrepl_id=rr)
-        insectors = RegularReplacementPos.objects.filter(dir=dir).filter(~Q(subdep=0)).filter(bound_regrepl_id=rr).order_by('dir').order_by('cat')
 
-        d_salary = {}
-        d_salary_rr = {}
-        d_units = {}
-        d_units_rr = {}
-        for dep in deps:
-            print(dep.name)
-            pos_calc = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(dep_id=dep.id)
-            salary_itogo = 0
-            salaryrr_itogo = 0
-            units_itogo = 0
-            unitsrr_itogo = 0
-            for pos in pos_calc:
-                if pos.salary != 'контракт':
-                    salary_itogo = salary_itogo + int(pos.salary)
-                if pos.salary_rr != 'контракт':
-                    if pos.salary_rr:
-                        salaryrr_itogo = salaryrr_itogo + int(pos.salary_rr)
-                units_itogo = units_itogo + pos.units
-                unitsrr_itogo = unitsrr_itogo + pos.units_rr
-            d_salary[dep.id] = salary_itogo
-            d_salary_rr[dep.id] = salaryrr_itogo
-            d_units[dep.id] = units_itogo
-            d_units_rr[dep.id] = unitsrr_itogo
-        print(salary_itogo)
-
-
-        return render(request, 'RegRepl/regrepl_search_dirs.html', context={
-
-                'd_salary':d_salary,
-            'd_salary_rr':d_salary_rr,
-            'd_units':d_units,
-            'd_units_rr':d_units_rr,'positions':positions,'dir':dir, 'insectors':insectors})
-def regrepl_json(request, rr):
-    if request.user.is_authenticated:
-        deps = DirDepartament.objects.all()
-
-        positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(dir_id=8).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
-    'level',
-    'cat__name',
-    'payment',
-    'salary',
-    'units_rr',
-    'level_rr',
-    'cat_rr__name',
-    'payment_rr',
-    'salary_rr',
-    'employer1',
-    'employer2',
-    'employer3',
-    'free',
-    'comm',
-    'disabled' ).order_by('dep_id', 'id', 'cat_id',  'subdep_id')
-    positions = list(positions)
-    return JsonResponse(positions, safe=False)
+# def regrepl_search_dir(request, dir):
+#     if request.user.is_authenticated:
+#

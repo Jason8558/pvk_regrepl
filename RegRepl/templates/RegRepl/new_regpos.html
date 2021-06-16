@@ -1,6 +1,6 @@
 {% extends "RegRepl/index.html"%}
-{%block header%}{{pos.dep}} - {{pos.name}} - {{pos.employer1}} {% if pos.free %}Ставка свободна{%endif%}{%endblock%}
-{%block title%}{{pos.name}}{%endblock%}
+{%block header%}Новая ставка{%endblock%}
+{%block title%}Новая ставка{%endblock%}
 {%block body%}
 <form class="posupd"  method="post">
   {%csrf_token%}
@@ -62,7 +62,6 @@
     <p><span>{{form.employer2.label}}</span></p>
     <p><span>{{form.employer3.label}}</span></p>
     <p><span>{{form.comm.label}}</span></p>
-    <p><span>{{form.disabled.label}}</span></p>
 </div>
 <div class="st_fields">
   <p><span>{{form.units_rr}}</span></p>
@@ -84,11 +83,14 @@
   <p><span>{{form.employer3}}</span></p>
 
   <p><span>{{form.comm}}</span></p>
-  <p><span>{{form.disabled}}</span></p>
+
+
 </div>
+</div>
+</div>
+<div class="buttonblock">  <input class="button submit" type="submit" name="" value="Сохранить">
+  <a class="button cancel"href="/regrepl/create/{{rr.id}}"> Отмена </a></div>
 
-
-  </div>
 
 {{form.errors}}
 

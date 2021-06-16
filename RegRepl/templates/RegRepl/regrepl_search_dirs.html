@@ -1,0 +1,57 @@
+{% extends "RegRepl/index.html"%}
+{% load humanize %}
+{%block header%}<h1 id="head"></h1>{%endblock%}
+{%block body%}
+<div class="container regrepl">
+
+<button onclick="getdata()" type="button" class="button"></button>
+
+
+<div class="edit_frame">
+<iframe src="{% url 'regpos_upd' id=5438%}" id="upd_frame" width="70%" height="500"></iframe>
+
+<button type="button"  onclick="send_submit()" class="button submit">Сохранить</button>
+<button type="button" class="button cancel" onclick="close_edit()"> Отмена </button>
+</div>
+
+
+<table >
+  <thead>
+
+
+  <tr><th colspan="7">по штатному расписанию</th>  <th colspan="9">по штатному замещению</th> <th></th></tr>
+<tr class="verticalrow">
+
+  <td>Должность</td>
+    <td>Кол-во штатных ед-ц</td>
+    <td>Разряд</td>
+    <td>Категория</td>
+    <td>Ступень</td>
+    <td>Базовая тарифная ставка</td>
+    <td>Месячный тарифный ФЗП</td>
+
+
+    <td>Кол-во штатных ед-ц</td>
+    <td>Разряд</td>
+    <td>Категория</td>
+    <td>Ступень</td>
+    <td>Базовая тарифная ставка</td>
+    <td>Месячный тарифный ФЗП</td>
+    <td>ФИО работника</td>
+    <td>ФИО работника</td>
+    <td>ФИО работника</td>
+    <td>Комментарий</td>
+</tr>
+  </thead>
+
+  <tbody>
+
+
+
+
+
+
+  </tbody>
+</table>
+</div>
+{%endblock%}

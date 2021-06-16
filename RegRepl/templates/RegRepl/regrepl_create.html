@@ -35,7 +35,14 @@
 {%block body%}
 <div class="container regrepl">
 
+<div class="edit_frame">
+<iframe src="{% url 'regpos_upd' id=5438%}" id="upd_frame" width="70%" height="500"></iframe>
 
+<button type="button"  onclick="send_submit()" class="button submit">Сохранить</button>
+<button type="button" class="button cancel" onclick="close_edit()"> Отмена </button>
+</div>
+
+<a  class="button submit" href="{% url 'regpos_new' id=rr.id%}"> Ввести позицию штатного замещения </a>
 <table >
   <thead>
 
@@ -79,77 +86,84 @@
 {% for pos in positions%}
 {% if pos.dep == dep%}
 {% if pos.free == 1 %}
-<tr onclick="return window.open('{% url 'regpos_upd' id=pos.id%}')" class="notcaption" style="background: yellow">
-<td>{{pos.name}}</td>
-<td>{{pos.units|floatformat}}</td>
-<td>{{pos.level}}</td>
-{% if pos.cat.id == "1"%}
-<td style="color: red;font-weight: bold;">{{pos.cat.name}}</td>
-{%endif%}
-{% if pos.cat.id == '2'%}
-<td style="color: hotpink;font-weight: bold;">{{pos.name}}</td>
-{%endif%}
-{% if pos.cat.id == '3'%}
-<td style="color: blue;font-weight: bold;">{{pos.name}}</td>
-{%endif%}
-<td>{{pos.payment}}</td>
-<td>{{pos.salary|intcomma}}</td>
-<td>{{pos.salary|intcomma}}</td>
-<td>{{pos.units_rr|floatformat}}</td>
-<td>{{pos.level_rr}}</td>
-{% if pos.cat_rr == "РУК"%}
-<td style="color: red;">{{pos.cat_rr}}</td>
-{%endif%}
-{% if pos.cat_rr == 'СПЕЦ'%}
-<td style="color: pink;">{{pos.cat_rr}}</td>
-{%endif%}
-{% if pos.cat_rr == 'РАБ'%}
-<td style="color: blue;">{{pos.cat_rr}}</td>
-{%endif%}
-<td>{{pos.payment_rr}}</td>
-<td>{{pos.salary_rr|intcomma}}</td>
-<td>{{pos.salary_rr|intcomma}}</td>
-<td class="rc_employer">{{pos.employer1}}</td>
-<td class="rc_employer">{{pos.employer2}}</td>
-<td class="rc_employer">{{pos.employer3}}</td>
-<td>{{pos.comm}}</td>
-</tr>
+{% if pos.disabled %}
+<tr onclick="open_for_upd({{pos.id}})" class="notcaption" id="{{pos.id}}" style="background: yellow; text-decoration: line-through">
 {%else%}
-
-<tr onclick="return window.open('{% url 'regpos_upd' id=pos.id%}')" class="notcaption">
-<td>{{pos.name}}</td>
-<td>{{pos.units|floatformat}}</td>
-<td>{{pos.level}}</td>
+<tr onclick="open_for_upd({{pos.id}})" class="notcaption" id="{{pos.id}}" style="background: yellow;">
+  {%endif%}
+<td class='pname'>{{pos.name}}</td>
+<td class='units'>{{pos.units|floatformat}}</td>
+<td class='level'>{{pos.level}}</td>
 {% if pos.cat.id == 1%}
-<td style="color: red;font-weight: bold;">{{pos.cat.name}}</td>
+<td class="cat" style="color: red;font-weight: bold;">{{pos.cat.name}}</td>
 {%endif%}
 {% if pos.cat.id == 2%}
-<td style="color: hotpink;font-weight: bold;">{{pos.cat.name}}</td>
+<td class="cat" style="color: hotpink;font-weight: bold;">{{pos.cat.name}}</td>
 {%endif%}
 {% if pos.cat.id == 3%}
-<td style="color: blue;font-weight: bold;">{{pos.cat.name}}</td>
+<td class="cat" style="color: blue;font-weight: bold;">{{pos.cat.name}}</td>
 {%endif%}
-<td>{{pos.payment}}</td>
-<td>{{pos.salary|intcomma}}</td>
-<td>{{pos.salary|intcomma}}</td>
-<td>{{pos.units_rr|floatformat}}</td>
-<td>{{pos.level_rr}}</td>
+<td class="payment">{{pos.payment}}</td>
+<td class="salary">{{pos.salary|intcomma}}</td>
+<td class="salary">{{pos.salary|intcomma}}</td>
+<td class="units_rr" >{{pos.units_rr|floatformat}}</td>
+<td сlass="level_rr">{{pos.level_rr}}</td>
 {% if pos.cat_rr.id == 1%}
-<td style="color: red;font-weight: bold;">{{pos.cat_rr.name}}</td>
+<td class="cat_rr" style="color: red;">{{pos.cat_rr.name}}</td>
 {%endif%}
 {% if pos.cat_rr.id == 2%}
-<td style="color: hotpink;font-weight: bold;">{{pos.cat_rr.name}}</td>
+<td class="cat_rr" style="color: pink;">{{pos.cat_rr.name}}</td>
 {%endif%}
 {% if pos.cat_rr.id == 3%}
-<td style="color: blue;font-weight: bold;">{{pos.cat_rr.name}}</td>
+<td class="cat_rr" style="color: blue;">{{pos.cat_rr.name}}</td>
 {%endif%}
-<td>{{pos.payment_rr}}</td>
-<td>{{pos.salary_rr|intcomma}}</td>
-<td>{{pos.salary_rr|intcomma}}</td>
-<td class="rc_employer">{{pos.employer1}}</td>
-<td class="rc_employer">{{pos.employer2}}</td>
-<td class="rc_employer">{{pos.employer3}}</td>
-<td>{{pos.comm}}</td>
+<td class="payment_rr">{{pos.payment_rr}}</td>
+<td class="salary_rr">{{pos.salary_rr|intcomma}}</td>
+<td class="salary_rr">{{pos.salary_rr|intcomma}}</td>
+<td class="rc_employer  employer1">{{pos.employer1}}</td>
+<td class="rc_employer  employer2">{{pos.employer2}}</td>
+<td class="rc_employer  employer3">{{pos.employer3}}</td>
+<td class="comm">{{pos.comm}}</td>
+</tr>
+{%else%}
+{% if pos.disabled %}
+<tr onclick="open_for_upd({{pos.id}})" class="notcaption" id="{{pos.id}}" style="text-decoration: line-through">
+{%else%}
+<tr onclick="open_for_upd({{pos.id}})"  id="{{pos.id}}" class="notcaption">
+  {%endif%}
+<td class='pname'>{{pos.name}}</td>
+<td class='units'>{{pos.units|floatformat}}</td>
+<td class='level'>{{pos.level}}</td>
+{% if pos.cat.id == 1%}
+<td class="cat" style="color: red;font-weight: bold;">{{pos.cat.name}}</td>
+{%endif%}
+{% if pos.cat.id == 2%}
+<td class="cat" style="color: hotpink;font-weight: bold;">{{pos.cat.name}}</td>
+{%endif%}
+{% if pos.cat.id == 3%}
+<td class="cat" style="color: blue;font-weight: bold;">{{pos.cat.name}}</td>
+{%endif%}
+<td class="payment">{{pos.payment}}</td>
+<td class="salary">{{pos.salary|intcomma}}</td>
+<td class="salary">{{pos.salary|intcomma}}</td>
+<td class="units_rr">{{pos.units_rr|floatformat}}</td>
+<td сlass="level_rr">{{pos.level_rr}}</td>
+{% if pos.cat_rr.id == 1%}
+<td class="cat_rr" style="color: red;font-weight: bold;">{{pos.cat_rr.name}}</td>
+{%endif%}
+{% if pos.cat_rr.id == 2%}
+<td class="cat_rr" style="color: hotpink;font-weight: bold;">{{pos.cat_rr.name}}</td>
+{%endif%}
+{% if pos.cat_rr.id == 3%}
+<td class="cat_rr" style="color: blue;font-weight: bold;">{{pos.cat_rr.name}}</td>
+{%endif%}
+<td class="payment_rr">{{pos.payment_rr}}</td>
+<td class="salary_rr">{{pos.salary_rr|intcomma}}</td>
+<td class="salary_rr">{{pos.salary_rr|intcomma}}</td>
+<td class="rc_employer employer1">{{pos.employer1}}</td>
+<td class="rc_employer employer2">{{pos.employer2}}</td>
+<td class="rc_employer employer3">{{pos.employer3}}</td>
+<td class="comm">{{pos.comm}}</td>
 </tr>
 
 
@@ -163,7 +177,7 @@
         {%for is in insectors%}
           {%if is.subdep == sd%}
             {%if is.free%}
-              <tr onclick="return window.open('{% url 'regpos_upd' id=is.id%}')" class="notcaption" style="background: yellow">
+              <tr onclick="return window.open('{% url 'regpos_upd' id=is.id%}')" id="{{is.id}}" class="notcaption" style="background: yellow">
               <td>{{is.name}}</td>
               <td>{{is.units|floatformat}}</td>
               <td>{{is.level}}</td>
@@ -202,7 +216,7 @@
               </tr>
             {%else%}
 
-              <tr onclick="return window.open('{% url 'regpos_upd' id=is.id%}')" class="notcaption">
+              <tr onclick="return window.open('{% url 'regpos_upd' id=is.id%}')" id="{{is.id}}" class="notcaption">
               <td>{{is.name}}</td>
               <td>{{is.units|floatformat}}</td>
               <td>{{is.level}}</td>

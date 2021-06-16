@@ -3,22 +3,26 @@
   font-family: Roboto;
 }
 
-input, select {
-height: 22px;
-border: 3px solid green;
-text-align: center;
-border-radius: 13px;
-float: right;
+input[type=text], input[type=number], input[type=date], input[type=search], textarea, select {
+  background: #f9f9f9;
+  border-radius: 11px;
+  border: 3px solid #977390;
 }
 
-input:focus, select:focus {
-outline: none;
-box-shadow: 0px 0px 4px 0px green;
-transition: 0.3s;
+
+
+input[type=text]:focus, input[type=number]:focus, input[type=date]:focus,input[type=search]:focus,textarea:focus,select:focus {
+
+outline: none;
+
+box-shadow: 0px 0px 4px 1px #977390;
+
+transition: 0.3s;
 }
 
 #id_employer1, #id_employer2, #id_employer3 {
-width: 400px;
+
+width: 400px;
 }
 
 #id_subdep {
@@ -26,44 +30,71 @@ input:focus, select:focus {
 }
 
 body {
-  background: #f5fff5;
+  background: #efe5ff !important;
+}
+
+iframe {
+
+width: 100%;
+
+height: 462px;
 }
 
 header {
-width: 95%;
-background: white;
-height: min-content;
-border: 4px solid #228653;
-margin: 26px auto;
-border-radius: 29px;
-box-shadow: 0px 0px 9px 0px #00B358;
-padding: 1em;
+
+width: 95%;
+
+height: min-content;
+
+margin: 26px auto;
+
+padding: 1em;
+border-radius: 17px;
+border: 2px solid #977390;
+background: white;
+box-shadow: 0px 0px 11px -2px black;
 }
 
 .button-back {
-float: right;
-background: red;
-padding: 11px;
-font-size: 11pt;
-color: black;
-text-decoration: none;
-border-radius: 12px;
+
+float: right;
+
+background: red;
+
+padding: 11px;
+
+font-size: 11pt;
+
+color: black;
+
+text-decoration: none;
+
+border-radius: 12px;
 }
 
 header div {
-height: min-content;
+
+height: min-content;
 }
 
+header div h1 {
+  text-align: center;
+}
 
 .container {
-width: 94%;
-margin: 0 auto;
+
+width: 94%;
+
+margin: 0 auto;
 }
 
 .newrr {
-/* border: 1px solid; */
-padding: 7px;
-border: 4px solid #228653;
+
+/* border: 1px solid; */
+
+padding: 7px;
+
+border: 4px solid #228653;
 }
 
 .newrr input, .newrr select{
@@ -75,35 +106,94 @@ header div {
 }
 
 .main {
-display: grid;
-grid-template-columns: 100%;
-grid-gap: 22px;
-width: 64%;
-margin: 0 auto;
+
+display: grid;
+
+grid-template-columns: 100%;
+
+grid-gap: 22px;
+
+width: 64%;
+
+margin: 0 auto;
 }
 
 .button {
-text-align: center;
-text-decoration: none;
-color: white;
-text-transform: uppercase;
-background: #FF8C00;
-padding: 6px;
-border-radius: 13px;
-transition: 0.3s;
+
+text-align: center;
+
+text-decoration: none;
+
+color: white;
+
+text-transform: uppercase;
+
+background: #1eab2f;
+
+padding: 6px;
+
+border-radius: 6px;
+
+transition: 0.3s;
 }
 
 .button:hover {
-box-shadow: 0px 0px 8px 2px #a65b00;
-transition: 0.3s;
+
+box-shadow: 0px 0px 8px 2px #38a600;
+
+transition: 0.3s;
 }
 
+.edit_frame {
+
+position: fixed;
+
+width: 100%;
+
+bottom: 0;
+
+display: none;
+
+left: 0;
+
+background: white;
+
+border-top: 4px solid black;
+}
+
+.edit_frame button {
+
+width: 310px;
+
+float: right;
+}
+
+.cancel {
+
+background: none;
+
+color: red;
+
+font-weight: 600;
+
+border: 1px solid red;
+
+margin-right: 18px;
+}
+
+.cancel:hover {box-shadow: inset 0px 0px 6px 0px red;}
+
 table {
-width: 100%;
-margin: 10px auto;
-border-collapse: collapse;
-border: 1px solid black;
-background: #ffffff;
+
+width: 100%;
+
+margin: 10px auto;
+
+border-collapse: collapse;
+
+border: 1px solid black;
+
+background: #ffffff;
 }
 
 .rc_employer {
@@ -119,22 +209,32 @@ table {
 }
 
 .itogo {
-background: #cafff1;
-font-weight: bold;
-font-size: 12pt;
+
+background: #cafff1 !important;
+
+font-weight: bold;
+
+font-size: 12pt;
 }
 
 .diritogo {
-background: #3b55e4;
-color: white;
-font-weight: 500;
-font-size: 12pt;
+
+background: #3b55e4;
+
+color: white;
+
+font-weight: 500;
+
+font-size: 12pt;
 }
 
 .all_itog {
-background: greenyellow;
-font-size: 14pt;
-font-weight: bolder;
+
+background: greenyellow;
+
+font-size: 14pt;
+
+font-weight: bolder;
 }
 
 .notcaption:hover {
@@ -149,25 +249,41 @@ thead td {
 }
 
 th {
-border: 1px solid black;
-color: white;
-background: #A65B00;
+
+border: 1px solid black;
+
+color: black;
+
+background: #ddc8fe;
 }
 
 .dir {
-font-size: 16pt;
-font-weight: bold;
-background: #b0eac9;
+
+font-size: 16pt;
+
+font-weight: bold;
+
+background: #b286f8;
+
+color: black;
 }
 
 .dep {
-font-weight: bold;
-text-decoration: underline;
+
+font-weight: bold;
+
+text-decoration: underline;
+
+background: #833aff !important;
+
+color: white;
 }
 
 .subdep {
-font-style: italic;
-font-weight: 500;
+
+font-style: italic;
+
+font-weight: 500;
 }
 
 .RegRepl_table {
@@ -185,29 +301,59 @@ caption {
 }
 
 thead {
-/* background: #038003; */
-color: black;
-font-weight: 800;
+
+/* background: #038003; */
+
+color: black;
+
+font-weight: 800;
 }
 
 td {
-border: 1px solid black;
-text-align: center;
+
+border: 1px solid black;
+
+text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background: #e7d9ff;
 }
 
 .posupd {
-width: 70%;
-margin: 0 auto;
+
+width: 52%;
+
+margin: 0 auto;
 }
 
 .posupd div {
-background: #d1ffd1;
-margin-top: 16px;
-padding: 10px;
-border: 5px solid #228653;
-border-radius: 30px 0px;
-/* height: 290px; */
+
+background: #ffffff;
+
+margin-top: 16px;
+
+padding: 10px;
+
+border: 5px solid #7a5fa5;
+
+/* border-radius: 30px 0px; */
+
+/* height: 290px; */
 }
+
+
+.buttonblock .button {
+  width: 46% !important;
+
+}
+
+.buttonblock .cancel {
+  width: 46% !important;
+  float: right;
+}
+
+
 
 .onstufftable {
 
@@ -220,21 +366,46 @@ td {
 
 .ost_container, .orr_container {
   grid-template-columns: 50% 50%;
+  grid-template-rows: 100%;
   display: grid;
   background: none !important;
   border: none !important;
   grid-gap: 15px;
+  width: 81%;
+  margin: 0 auto;
+}
+
+.st_labels, .st_fields {
+
+display: grid;
+
+border: none !important;
+
+grid-gap: 10px;
+}
+
+.st_fields select {
+  float: left;
+  width: 100%;
+  padding: 0px;
+  height: 26px;
+  /* text-align: center !important; */
 }
 
 .formsubmit {
-width: 285px;
-height: 29px;
-background: greenyellow;
-font-weight: bold;
+
+width: 285px;
+
+height: 29px;
+
+background: greenyellow;
+
+font-weight: bold;
 }
 
 .onregrepl {
-height: 301px;
+
+/* height: 483px; */
 }
 
 .search_button {
@@ -242,13 +413,21 @@ td {
 }
 
 .search_menu {
-background: white;
-border: 2px solid red;
-position: absolute;
-width: 681px;
-height: 172px;
-left: 831px;
-z-index: 1;
+
+
+background: white;
+
+border: 2px solid red;
+
+position: absolute;
+
+width: 681px;
+
+height: 172px;
+
+left: 831px;
+
+z-index: 1;
 }
 
 .search_menu select, input {

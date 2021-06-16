@@ -114,6 +114,7 @@ class RegularReplacementPos(models.Model):
     employer3 = models.CharField(max_length=256,  verbose_name="Сотрудник 3 ", blank=True,db_index=True,default="")
     free = models.BooleanField(verbose_name='Ставка свободна ', default=False)
     comm = models.CharField(max_length=256,  verbose_name="Комментарий ", blank=True, db_index=True,default="")
+    disabled = models.BooleanField(verbose_name='Ставка выведена ', default=False)
     class Meta:
         ordering = ["id"]
         verbose_name = 'Позиция штатного замещения'
