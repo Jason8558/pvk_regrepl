@@ -2,35 +2,8 @@
 {% load humanize %}
 {%block header%}Штатное замещение за {{rr.duration|date:"d.m.Y"}} |
 <span style="font-size: 12pt;">Штат в количестве: <span style="color:blue;">{{count}}</span> единиц</span>
-<a class="search_button" href="#">Поиск</a>
-<div class="search_menu">
-  <form action="{% url 'regrepl' id=rr.id %}" method="get">
-    {% csrf_token %}
-    <select class="" name="">
-      <option value="dir">По дирекции</option>
-      <option value="dep">По отделу</option>
-    </select>
+<a class="search_button" href="{% url 'regpos_search' rr=rr.id%}">Поиск</a>
 
-    <select class="" name="dir_search">
-      <option value="">Выберите дирекцию</option>
-      {% for dir in dirs%}
-        {% if dir.location == rr.location %}
-        <option value="{{dir.id}}">{{dir.name}}</option>
-        {%endif%}
-      {%endfor%}
-    </select>
-  <select id="depsearch" name="dep_search">
-        <option value="">Выберите отдел</option>
-    {% for dep in deps%}
-      {% if dep.location == rr.location %}
-      <option value="{{dep.id}}">{{dep.name}}</option>
-      {%endif%}
-    {%endfor%}
-  </select>
-
-<input type="submit" name="" value="Найти">
-  </form>
-</div>
  <a href="/" class="button-back">Х</a>{%endblock%}
 {%block body%}
 <div class="container regrepl">

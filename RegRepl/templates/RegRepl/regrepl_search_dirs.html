@@ -1,10 +1,10 @@
 {% extends "RegRepl/index.html"%}
 {% load humanize %}
-{%block header%}<h1 id="head"></h1>{%endblock%}
+{%block header%} <a href="{% url 'regrepl' id=rr.id%}">Назад к замещению</a><h1 id="head"></h1>{%endblock%}
 {%block body%}
 <div class="container regrepl">
 
-<button onclick="getdata()" type="button" class="button"></button>
+
 
 
 <div class="edit_frame">
@@ -14,6 +14,21 @@
 <button type="button" class="button cancel" onclick="close_edit()"> Отмена </button>
 </div>
 
+<div class="search_menu">
+  <select onchange="select_search_type()" class="sm_type" name="sm_type" id="sm_type">
+  <option value="1">По дирекции\цеху</option>
+  <option value="2">По отделу</option>
+  <option value="3">По должности</option>
+  </select>
+
+  <select class="sm_main" name="sm_main" id="sm_main">
+
+  </select>
+
+  <button onclick="getdata()" type="button" class="button" name="sm_submit">Найти</button>
+
+
+</div>
 
 <table >
   <thead>
