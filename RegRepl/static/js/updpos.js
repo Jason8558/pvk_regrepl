@@ -1,9 +1,16 @@
+let old_background
+
 function open_for_upd(id) {
+  old_background = ""
   $('.edit_frame').css('display', 'block')
   item = '/regrepl/item/upd/' + id
   $('#upd_frame').attr('src', item)
-  old_background = $('#' + id).css('background')
-  $('#' + id).css('background', '#9dffa9')
+old_background =   $('#' + id).css('background')
+  change_background(id, '#9dffa9')
+  // $('#' + id).css('background', '#9dffa9')
+  $('#' + id).css('box-shadow', '0px 0px 13px 0px black')
+  $('#' + id)[0].scrollIntoView({behavior: "smooth"})
+
 }
 
 // function save_item(id) {
@@ -18,7 +25,21 @@ function open_for_upd(id) {
 function send_submit() {
   id_ = $('#upd_frame').attr('src')
   id = id_.split('/')[4]
-  console.log(id);
+
+if ($('#upd_frame').contents().find('#id_free').prop('checked') == true) {
+    background = 'yellow'
+}
+else {
+    background = 'white'
+}
+
+if ($('#upd_frame').contents().find('#id_disabled').prop('checked') == true) {
+    style = 'line-through'
+}
+else {
+    style  = 'none'
+}
+
   nname = $('#upd_frame').contents().find('#id_name').val()
   units = $('#upd_frame').contents().find('#id_units').val()
   level = $('#upd_frame').contents().find('#id_level').val()
@@ -27,7 +48,7 @@ function send_submit() {
   salary = $('#upd_frame').contents().find('#id_salary').val()
   units_rr = $('#upd_frame').contents().find('#id_units_rr').val()
   cat_rr = $('#upd_frame').contents().find('#id_cat_rr option:selected').text()
-  console.log(cat_rr);
+
   payment_rr = $('#upd_frame').contents().find('#id_payment_rr').val()
   salary_rr = $('#upd_frame').contents().find('#id_salary_rr').val()
   employer1 = $('#upd_frame').contents().find('#id_employer1').val()
@@ -40,7 +61,7 @@ function send_submit() {
   $('#' + id).find('.payment').text(payment)
   $('#' + id).find('.salary').text(salary)
   $('#' + id).find('.cat_rr').text(cat_rr)
-  console.log($('#' + id).find('.cat_rr').text());
+
   $('#' + id).find('.units_rr').text(units_rr)
   $('#' + id).find('.payment_rr').text(payment_rr)
   $('#' + id).find('.salary_rr').text(salary_rr)
@@ -50,14 +71,24 @@ function send_submit() {
 
 
 
+
+
   $('#upd_frame').contents().find('form').submit()
-  $('#' + id).css('background', 'white')
+
+  $('#' + id).css('box-shadow', 'none')
+  $('#' + id).css('background', background)
+  $('#' + id).css('text-decoration', style)
   $('.edit_frame').css('display', 'none')
 }
 
 function close_edit() {
   id_ = $('#upd_frame').attr('src')
   id = id_.split('/')[4]
-  $('#' + id).css('background', 'white')
+  change_background(id, old_background)
+  $('#' + id).css('box-shadow', 'none')
   $('.edit_frame').css('display', 'none')
+}
+
+function change_background(row_id, color) {
+  $('#' + row_id).css('background', color)
 }

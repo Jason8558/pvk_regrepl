@@ -209,23 +209,16 @@ background: #ffffff;
 }
 
 .itogo {
-
-background: white !important;
-
-font-weight: bold;
-
-font-size: 12pt;
+background: #83cbff !important;
+font-weight: bold;
+font-size: 12pt;
 }
 
 .diritogo {
-
-background: white;
-
-color: white;
-
-font-weight: 500;
-
-font-size: 12pt;
+background: #d87676 !important;
+color: #000;
+font-weight: 500;
+font-size: 12pt;
 }
 
 .all_itog {
@@ -269,14 +262,10 @@ color: black;
 }
 
 .dep {
-
-font-weight: bold;
-
-text-decoration: underline;
-
-background: white !important;
-
-color: black;
+font-weight: bold;
+text-decoration: underline;
+background: #83cbff !important;
+color: black;
 }
 
 .subdep {
@@ -318,6 +307,10 @@ text-align: center;
 
 tbody tr:nth-child(even) {
   background: lightgrey;
+}
+
+tbody tr {
+  transition: 0.3s;
 }
 
 .posupd {

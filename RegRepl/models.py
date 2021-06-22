@@ -107,7 +107,7 @@ class RegularReplacementPos(models.Model):
     units_rr = models.FloatField(max_length=256, verbose_name="Кол-во едениц по штатному замещению ", db_index=True)
     level_rr = models.CharField(verbose_name='Разряд по штатному замещению',blank=True, max_length=256)
     cat_rr =  models.ForeignKey('Category', related_name='cat_regrepl', on_delete=models.CASCADE, verbose_name="Категория по штатному замещению ",default="2")
-    payment_rr = models.CharField(verbose_name='Ступень оплаты по штатному замещению', max_length=3)
+    payment_rr = models.CharField(verbose_name='Ступень оплаты по штатному замещению', blank=True,max_length=3)
     salary_rr = models.CharField(max_length=256, verbose_name="Оклад по штатному замещению ", db_index=True)
     employer1 = models.CharField(max_length=256,  verbose_name="Сотрудник 1 ", blank=True, db_index=True, default="")
     employer2 = models.CharField(max_length=256,  verbose_name="Сотрудник 2 ", blank=True,db_index=True,default="")

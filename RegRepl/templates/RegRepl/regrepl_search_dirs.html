@@ -1,5 +1,6 @@
 {% extends "RegRepl/index.html"%}
 {% load humanize %}
+{%block title%} Поиск {%endblock%}
 {%block header%} <a href="{% url 'regrepl' id=rr.id%}">Назад к замещению</a><h1 id="head"></h1>{%endblock%}
 {%block body%}
 <div class="container regrepl">
@@ -19,8 +20,10 @@
   <option value="1">По дирекции\цеху</option>
   <option value="2">По отделу</option>
   <option value="3">По должности</option>
+  <option value="4">По категории</option>
   </select>
 
+<input type="text" id="sm_position"  style="display: none;" name="sm_position" placeholder="введите слово для поиска...">
   <select class="sm_main" name="sm_main" id="sm_main">
 
   </select>

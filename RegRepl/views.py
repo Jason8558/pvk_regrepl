@@ -23,7 +23,7 @@ def regrepl_create(request, id):
         dirs_search = request.GET.get('dir_search','')
         print(dirs_search)
         RegRepl = RegularReplacement.objects.get(id=id)
-        notinsectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(subdep=None).order_by('dir').order_by('cat')
+        notinsectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(subdep=None).order_by('cat','id','dir')
         insectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(~Q(subdep=0)).order_by('dir').order_by('cat')
         all = RegularReplacementPos.objects.filter(bound_regrepl=id)
         all_salary_itogo = 0
@@ -223,11 +223,13 @@ def regrepl_json(request, type, id, rr):
         if type == 1:
             positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(dir_id=id).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
             'level',
+            'cat_id',
             'cat__name',
             'payment',
             'salary',
             'units_rr',
             'level_rr',
+            'cat_rr_id',
             'cat_rr__name',
             'payment_rr',
             'salary_rr',
@@ -243,11 +245,13 @@ def regrepl_json(request, type, id, rr):
             positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(dep_id=id).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
             'level',
             'cat__name',
+            'cat_id',
             'payment',
             'salary',
             'units_rr',
             'level_rr',
             'cat_rr__name',
+            'cat_rr_id',
             'payment_rr',
             'salary_rr',
             'employer1',
@@ -255,12 +259,55 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('dep_id', 'id', 'cat_id',  'subdep_id')
+            'disabled' ).order_by('cat_id','dep_id', 'id', 'cat_id',  'subdep_id')
             positions = list(positions)
+        if type == 4:
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(cat_id=id).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
+            'level',
+            'cat__name',
+            'cat_id',
+            'payment',
+            'salary',
+            'units_rr',
+            'level_rr',
+            'cat_rr__name',
+            'cat_rr_id',
+            'payment_rr',
+            'salary_rr',
+            'employer1',
+            'employer2',
+            'employer3',
+            'free',
+            'comm',
+            'disabled' ).order_by('cat_id','dep_id', 'id', 'cat_id',  'subdep_id')
+            positions = list(positions)
+
         return JsonResponse(positions, safe=False)
 
 
 
+def get_positions(request, pos, rr):
+    if request.user.is_authenticated:
+        positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(name__icontains=pos).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
+        'level',
+        'cat_id',
+        'cat__name',
+        'payment',
+        'salary',
+        'units_rr',
+        'level_rr',
+        'cat_rr_id',
+        'cat_rr__name',
+        'payment_rr',
+        'salary_rr',
+        'employer1',
+        'employer2',
+        'employer3',
+        'free',
+        'comm',
+        'disabled' ).order_by('dep_id', 'id', 'cat_id',  'subdep_id')
+        positions = list(positions)
+        return JsonResponse(positions, safe=False)
 
 def get_dirs(request):
     if request.user.is_authenticated:
@@ -270,6 +317,29 @@ def get_dirs(request):
 
 def get_deps(request):
     if request.user.is_authenticated:
-        deps = Departament.objects.values('id', 'name').order_by('name')
+        deps = Departament.objects.values('id', 'name','dirdepartament__name').order_by('dirdepartament__name')
         deps = list(deps)
         return JsonResponse(deps, safe=False)
+
+def get_cats(request, cat):
+    if request.user.is_authenticated:
+        positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(cat_id=cat).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
+        'level',
+        'cat_id',
+        'cat__name',
+        'payment',
+        'salary',
+        'units_rr',
+        'level_rr',
+        'cat_rr_id',
+        'cat_rr__name',
+        'payment_rr',
+        'salary_rr',
+        'employer1',
+        'employer2',
+        'employer3',
+        'free',
+        'comm',
+        'disabled' ).order_by('dep_id', 'id', 'cat_id',  'subdep_id')
+        positions = list(positions)
+        return JsonResponse(positions, safe=False)
