@@ -281,6 +281,28 @@ def regrepl_json(request, type, id, rr):
             'comm',
             'disabled' ).order_by('cat_id','dep_id', 'id', 'cat_id',  'subdep_id')
             positions = list(positions)
+        if type == 5:
+            print(rr)
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
+            'level',
+            'cat__name',
+            'cat_id',
+            'payment',
+            'salary',
+            'units_rr',
+            'level_rr',
+            'cat_rr__name',
+            'cat_rr_id',
+            'payment_rr',
+            'salary_rr',
+            'employer1',
+            'employer2',
+            'employer3',
+            'free',
+            'comm',
+            'disabled' ).order_by('dep_id', 'id', 'cat_id', 'subdep_id')
+            print(positions)
+            positions = list(positions)
 
         return JsonResponse(positions, safe=False)
 
