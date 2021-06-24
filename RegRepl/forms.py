@@ -45,6 +45,9 @@ class RegularReplacementPos_form(forms.ModelForm):
             "disabled"
         ]
 
+    free = forms.BooleanField(label="Ставка свободна" , widget=forms.CheckboxInput(
+            attrs={ 'id': 'id_free', 'onchange':'free_position()'}))
+
     def saveFirst(self, bound_rr):
         # b_regrepl = RegularReplacement.objects.get(id=bound_regrepl)
 

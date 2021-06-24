@@ -1,6 +1,7 @@
 let old_background
 
 function open_for_upd(id) {
+
   old_background = ""
   $('.edit_frame').css('display', 'block')
   item = '/regrepl/item/upd/' + id
@@ -11,16 +12,24 @@ old_background =   $('#' + id).css('background')
   $('#' + id).css('box-shadow', '0px 0px 13px 0px black')
   $('#' + id)[0].scrollIntoView({behavior: "smooth"})
 
+
+
 }
 
-// function save_item(id) {
-// console.log(id);
-// // nname = $('#upd_frame').contents().find('#id_name').val()
-// nname = $('#id_name').val()
-// console.log(nname);
-// $('#' + id).find('.pname').text(nname)
-// console.log($('#' + id).find('.pname').text());
-// }
+function free_position() {
+
+  if ($('#id_free').prop('checked') == true) {
+    $('#id_units_rr').val("0")
+    $('#id_payment_rr').val("0")
+    $('#id_level_rr').val("0")
+      $('#id_salary_rr').val("0")
+      $('#id_employer1').val("")
+      $('#id_employer2').val("")
+      $('#id_employer3').val("")
+  }
+
+
+}
 
 function send_submit() {
   id_ = $('#upd_frame').attr('src')
@@ -84,7 +93,9 @@ else {
 function close_edit() {
   id_ = $('#upd_frame').attr('src')
   id = id_.split('/')[4]
+
   change_background(id, old_background)
+
   $('#' + id).css('box-shadow', 'none')
   $('.edit_frame').css('display', 'none')
 }
