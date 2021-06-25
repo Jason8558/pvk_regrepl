@@ -5,7 +5,8 @@ $(document).ready(function() {
 
 
 function getdata() {
-$('tbody').find('tr').remove();
+
+
     type = $('#sm_type option:selected').val()
     object_id = $('#sm_main option:selected').val()
     rr_id = document.location.href.split('/')[5]
@@ -22,16 +23,23 @@ $('tbody').find('tr').remove();
 
     let dep_units_rr = 0
     let dir_units_rr = 0
-
+    first_sector = true
 
     $.getJSON(query_url,  (data) => {
 
+      $('tbody').append('<tr class="dir" ><td colspan="17">' + data[0].dir__name + '</td></tr>')
+
       $('tbody').append('<tr class="dep" ><td colspan="17">' + data[0].dep__name + '</td></tr>')
+
+
       for (var i = 0; i < data.length; i++) {
       pos_free = ""
       pos_dis = ""
       cat_color = ""
       cat_rr_color = ""
+
+
+
       dep_units = dep_units + parseFloat(data[i].units)
       dep_units_rr = dep_units_rr + parseFloat(data[i].units_rr)
 
@@ -95,12 +103,14 @@ $('tbody').find('tr').remove();
 
 
 
-      if (data[i].subdep__name) {
-      $('tbody').append('<tr style="' + pos_free + pos_dis + '" onclick="open_for_upd(' + data[i].id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name + "(" + data[i].subdep__name + ")" + "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr + '</td><td style="' + cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name + '</td><td сlass="level_rr">' + data[i].level_rr + '</td><td class="payment_rr" >' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
-      }
-      else {
-      $('tbody').append('<tr style="' + pos_free + pos_dis + '" onclick="open_for_upd(' + data[i].id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name  + "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr + '</td><td style="'+ cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name + '</td><td сlass="level_rr">' + data[i].level_rr + '</td><td class="payment_rr">' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
-      }
+
+
+      $('tbody').append('<tr style="' + pos_free + pos_dis + '" onclick="open_for_upd(' + data[i].id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name +  "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr + '</td><td style="' + cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name + '</td><td сlass="level_rr">' + data[i].level_rr + '</td><td class="payment_rr" >' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
+
+if (i != data.length-1) {
+      if (data[i+1].subdep__name &&  data[i].subdep__name != data[i+1].subdep__name ) {
+        $('tbody').append( "<tr class='subdep'><td colspan='17'>"+ data[i+1].subdep__name +"</td></tr> ")}
+}
 
       if (i == data.length-1) {
 
@@ -118,14 +128,19 @@ $('tbody').find('tr').remove();
       }
       else {
 
+
       if (data[i].dep__name != data[i+1].dep__name) {
       $('tbody').append( "<tr class='itogo'><td> Итого </td> <td>"+ dep_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary) + "</td><td></td><td>"+ dep_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) +"</td> <td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) + "</td> <td></td><td></td><td></td><td></td></tr> ")
 
-      $('tbody').append('<tr class="dep"  ><td colspan="17">' + data[i+1].dep__name + '</td></tr>')
+
       if (data[i].dir__name != data[i+1].dir__name) {
-        $('tbody').append('<tr class="dep"  ><td colspan="17">' + data[i+1].dir__name + '</td></tr>')
+        dir_salary = dir_salary + dep_salary
+            $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td></td><td></td><td></td></tr> ")
+        $('tbody').append('<tr class="dir"  ><td colspan="17">' + data[i+1].dir__name + '</td></tr>')
+
       }
 
+    $('tbody').append('<tr class="dep"  ><td colspan="17">' + data[i+1].dep__name + '</td></tr>')
 
       dir_salary = dir_salary + dep_salary
       dir_salary_rr = dir_salary_rr + dep_salary_rr
@@ -139,6 +154,7 @@ $('tbody').find('tr').remove();
 
 
       }
+
 
 
       }
@@ -157,6 +173,7 @@ $('tbody').find('tr').remove();
 
     })
 
+setTimeout(() => $('#loading').remove(), 2000)
 
 
     }

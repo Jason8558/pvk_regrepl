@@ -6,7 +6,7 @@
 input[type=text], input[type=number], input[type=date], input[type=search], textarea, select {
   background: #f9f9f9;
   border-radius: 11px;
-  border: 3px solid #977390;
+  border: 2px solid #977390;
 }
 
 
@@ -209,16 +209,23 @@ background: #ffffff;
 }
 
 .itogo {
-background: #83cbff !important;
-font-weight: bold;
-font-size: 12pt;
+
+background: #83cbff !important;
+
+font-weight: bold;
+
+font-size: 12pt;
 }
 
 .diritogo {
-background: #d87676 !important;
-color: #000;
-font-weight: 500;
-font-size: 12pt;
+
+background: #d87676 !important;
+
+color: #000;
+
+font-weight: 500;
+
+font-size: 12pt;
 }
 
 .all_itog {
@@ -256,22 +263,26 @@ font-size: 16pt;
 
 font-weight: bold;
 
-background: white;
+background: #d87676 !important;
 
 color: black;
 }
 
 .dep {
-font-weight: bold;
-text-decoration: underline;
-background: #83cbff !important;
-color: black;
+
+font-weight: bold;
+
+text-decoration: underline;
+
+background: #83cbff !important;
+
+color: black;
 }
 
 .subdep {
 
 font-style: italic;
-
+background: rgb(186, 255, 253) !important;
 font-weight: 500;
 }
 
@@ -282,6 +293,8 @@ font-weight: 500;
 .StuffTab {
 
 }
+
+
 
 caption {
   background: white;
@@ -406,8 +419,10 @@ font-weight: bold;
 }
 
 .search_menu {
-/* border: 1px solid red; */
-/* height: 163px; */
+
+/* border: 1px solid red; */
+
+/* height: 163px; */
 }
 
 .search_menu select, input {
@@ -416,5 +431,58 @@ font-weight: bold;
 }
 
 #depsearch {
+
+}
+.deps {
+
+width: 970px;
+}
+
+.deps table td{
+  text-align: left;
+}
+
+.newdep-form {
+
+/* border: 1px solid; */
+
+width: 490px;
+
+/* float: left; */
+
+display: block;
+
+margin: 0 auto;
+}
+
+.newdep-form input, .newdep-form select {
+
+width: 100%;
+}
+
+.newdep-form p {
+  margin-top: 7px;
+}
+
+.newdep-frame {
+width: 509px;
+height: 192px;
+position: fixed;
+bottom: 0;
+left: 0;
+border: 3px solid;
+transition: 0.3s;
+padding: 9px;
+background: white;
+}
+
+.newdep-frame iframe{
+width: 100%;
+height: 155px;
+border: none;
+}
+
+.newdep-frame button{
+width: 100%;
 
 }

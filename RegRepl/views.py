@@ -17,6 +17,7 @@ def index(request):
         return render(request,'RegRepl/index.html', context={'RegRepls':RegRepls, 'locs':locations})
     else:
         return redirect('/accounts/login')
+
 def regrepl_create(request, id):
     if request.user.is_authenticated:
 
@@ -148,6 +149,7 @@ def regrepl_create(request, id):
         'd':d,'count':count, 'rr':RegRepl, 'positions':notinsectors, 'insectors':insectors, 'dirs':dirs, 'deps':deps, 'subdeps':subdeps})
     else:
         return redirect('/accounts/login')
+
 def regpos_update(request, id):
     if request.user.is_authenticated:
         if request.method == "GET":
@@ -166,6 +168,7 @@ def regpos_update(request, id):
                 print(bound_form.errors.as_data())
     else:
         return redirect('/accounts/login')
+
 def regpos_new(request,id):
     if request.user.is_authenticated:
         if request.method == "GET":
@@ -178,6 +181,7 @@ def regpos_new(request,id):
                 pos_form.saveFirst(id)
                 loc = '/regrepl/create/' + str(id)
                 return redirect(loc)
+
 def regrepl_copy(request):
     if request.user.is_authenticated:
         location = request.POST.get('loc', '')
@@ -300,13 +304,11 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('dep_id', 'id', 'cat_id', 'subdep_id')
+            'disabled' ).order_by('dir_id', 'dep_id', 'id', 'cat_id', 'subdep_id')
             print(positions)
             positions = list(positions)
 
         return JsonResponse(positions, safe=False)
-
-
 
 def get_positions(request, pos, rr):
     if request.user.is_authenticated:
@@ -365,3 +367,21 @@ def get_cats(request, cat):
         'disabled' ).order_by('dep_id', 'id', 'cat_id',  'subdep_id')
         positions = list(positions)
         return JsonResponse(positions, safe=False)
+
+def deps(request):
+    if request.user.is_authenticated:
+        return render(request, 'RegRepl/deps.html', context={})
+
+def new_dep(request):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            dep_form = Departament_form()
+            return render(request, 'RegRepl/new_dep.html', context={'form':dep_form})
+        else:
+            dir = request.POST.get('nd_dir', '')
+            dep_form = Departament_form(request.POST)
+            if dep_form.is_valid():
+                dep_form.save()
+                dep_form.addtodir(dir)
+                loc = '/deps/'
+                return redirect(loc)

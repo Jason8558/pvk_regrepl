@@ -1,0 +1,31 @@
+{% extends "RegRepl/index.html"%}
+{%load static%}
+{%block title%}Отделы{%endblock%}
+{%block header%}Отделы{%endblock%}
+{%block script%}<script src="{% static 'js/newdep.js'%}" charset="utf-8"></script>{%endblock%}
+
+
+{%block body%}
+<script type="text/javascript">
+
+</script>
+<div class="container deps">
+  <button onclick="open_for_add()" type="button" name="button">+ Новый отдел</button>
+<div style="left: -999px;" class="newdep-frame">
+  <iframe id="nd_frame" src="/deps/new" width="550" height="550"></iframe>
+  <button onclick="nd_send_submit()" class="button" type="button" name="nd-frame-sbutton"> Добавить отдел </button>
+</div>
+
+<table >
+  <thead>
+  <tr><th>Название</th><th>Относится к..</th></tr>
+
+
+  </thead>
+
+  <tbody>
+
+  </tbody>
+</table>
+</div>
+{%endblock%}

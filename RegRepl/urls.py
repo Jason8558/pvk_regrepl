@@ -12,7 +12,9 @@ urlpatterns = [
     path('regrepl/item/search/<int:rr>', views.regrepl_search, name='regpos_search'),
     path('new/', views.regrepl_copy, name='regrepl_copy'),
     path('getdirs/', views.get_dirs, name='search_get_dirs'),
-    path('getdeps/', views.get_deps, name='search_get_deps')
+    path('getdeps/', views.get_deps, name='search_get_deps'),
+    path('deps/', views.deps, name='get_deps'),
+    path('deps/new', views.new_dep, name='new_dep'),
 
 
 

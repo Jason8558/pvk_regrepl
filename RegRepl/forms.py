@@ -74,3 +74,17 @@ class RegularReplacementPos_form(forms.ModelForm):
         free = self.cleaned_data["free"],
         comm = self.cleaned_data["comm"],
         disabled = self.cleaned_data["disabled"] )
+
+class Departament_form(forms.ModelForm):
+    class Meta:
+        model = Departament
+        fields = [
+                        "name",
+                        
+                        "location"
+
+                    ]
+    def addtodir(self, id):
+        dir = DirDepartament.objects.get(id=id)
+        dep = Departament.objects.latest('id')
+        dir.dep.add(dep)
