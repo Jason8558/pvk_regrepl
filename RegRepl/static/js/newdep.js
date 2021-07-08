@@ -21,6 +21,10 @@ function nd_send_submit(){
 
 }
 
+function nd_frame_cancelbtn(){
+  $(".newdep-frame").css('left', '-999px')
+}
+
 function deps_get() {
   $('tbody').find('tr').remove()
 $.getJSON('/getdeps/', (data) => {

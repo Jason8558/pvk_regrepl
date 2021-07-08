@@ -45,6 +45,14 @@ break;
       $('#sm_position').css('display', 'none')
       $('#sm_main').append('<option value="1">Руководители</option><option value="2">Специалисты</option><option value="3">Рабочие</option>' )
      break;
+
+     case '6':
+     $('#sm_btw_container').css('display', '')
+         $('#sm_main').css('display', 'none')
+         $('#sm_position').css('display', 'none')
+
+        break;
+
   default:
 
   }
@@ -58,6 +66,9 @@ function getdata() {
     rr_id = document.location.href.split('/')[6]
     if ($('#sm_type option:selected').val() == 3) {
               query_url = '/regrepl/getdata/getpos/' + rr_id.toString() +"/"+ $('#sm_position').val()
+    }
+    if ($('#sm_type option:selected').val() == 6) {
+            query_url = '/regrepl/getdata/' + type.toString() + "/0/" + rr_id.toString()
     }
     else {
           query_url = '/regrepl/getdata/' + type.toString() + "/" + object_id.toString() + "/" + rr_id.toString()
@@ -79,6 +90,7 @@ function getdata() {
 
       $('tbody').append('<tr class="dep" ><td colspan="17">' + data[0].dep__name + '</td></tr>')
       for (var i = 0; i < data.length; i++) {
+      background = ""
       pos_free = ""
       pos_dis = ""
       cat_color = ""
@@ -106,7 +118,7 @@ function getdata() {
 
 
       if (data[i].free == true) {
-      pos_free = "background: yellow;"
+      background = "background: yellow;"
       }
 
       if (data[i].disabled == true) {
@@ -150,9 +162,12 @@ function getdata() {
       subdep = ""
       }
 
+        if ($('#sm_type option:selected').val() == 6) {
+          background = "background:"}
 
 
-      $('tbody').append('<tr style="' + pos_free + pos_dis + '" onclick="open_for_upd(' + data[i].id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name + subdep + "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr + '</td><td style="' + cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name + '</td><td сlass="level_rr">' + data[i].level_rr + '</td><td class="payment_rr" >' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
+
+      $('tbody').append('<tr style="'+ background +  pos_dis + '" onclick="open_for_upd(' + data[i].id + ',' + data[i].bound_regrepl_id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name + subdep + "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr + '<td сlass="level_rr">' + data[i].level_rr + '</td><td style="' + cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name + '</td>><td class="payment_rr" >' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
 
 
       if (i == data.length-1) {
@@ -175,6 +190,11 @@ function getdata() {
       if ($('#sm_type option:selected').val() == 4) {
 
       $('tbody').append( "<tr class=diritogo><td>" + $('#sm_main option:selected').text() +" итого </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td></td> <td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td><td></td><td></td><td></td></tr> ")
+      }
+
+      if ($('#sm_type option:selected').val() == 6) {
+
+      $('tbody').append( "<tr class=diritogo><td>Итого по свободным ставкам </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td></td> <td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td><td></td><td></td><td></td></tr> ")
       }
 
       }

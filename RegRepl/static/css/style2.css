@@ -37,7 +37,7 @@ iframe {
 
 width: 100%;
 
-height: 462px;
+
 }
 
 header {
@@ -327,10 +327,8 @@ tbody tr {
 }
 
 .posupd {
-
-width: 52%;
-
-margin: 0 auto;
+width: 991px;
+margin: 0 auto;
 }
 
 .posupd div {
@@ -455,7 +453,7 @@ display: block;
 margin: 0 auto;
 }
 
-.newdep-form input, .newdep-form select {
+.newdep-form input, .newdep-form select, .newsubdep-form input, .newsubdep-form select {
 
 width: 100%;
 }
@@ -464,25 +462,26 @@ width: 100%;
   margin-top: 7px;
 }
 
-.newdep-frame {
-width: 509px;
+.newdep-frame, .newsubdep-frame {
+width: 555px;
 height: 192px;
 position: fixed;
 bottom: 0;
 left: 0;
 border: 3px solid;
 transition: 0.3s;
-padding: 9px;
+padding: 4px;
 background: white;
 }
 
-.newdep-frame iframe{
+.frame iframe {
 width: 100%;
-height: 155px;
+height: 155px !important;
 border: none;
 }
 
-.newdep-frame button{
-width: 100%;
+.frame button{width: 49%;}
 
+.frame .cancel {
+  margin: 0;
 }

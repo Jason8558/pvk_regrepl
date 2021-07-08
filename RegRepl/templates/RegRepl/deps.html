@@ -11,9 +11,10 @@
 </script>
 <div class="container deps">
   <button onclick="open_for_add()" type="button" name="button">+ Новый отдел</button>
-<div style="left: -999px;" class="newdep-frame">
+<div style="left: -999px;" class="frame newdep-frame">
   <iframe id="nd_frame" src="/deps/new" width="550" height="550"></iframe>
   <button onclick="nd_send_submit()" class="button" type="button" name="nd-frame-sbutton"> Добавить отдел </button>
+  <button type="button" onclick="nd_frame_cancelbtn()" class="button cancel" name="button"> Отмена </button>
 </div>
 
 <table >

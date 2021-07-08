@@ -159,10 +159,18 @@ def regpos_update(request, id):
             return render(request, 'RegRepl/upd_regpos.html', context={'form':bound_form, 'pos':pos})
         else:
             pos = RegularReplacementPos.objects.get(id=id)
-
+            dir = request.POST.get('urp_dir', '')
+            dep = request.POST.get('urp_dep', '')
+            subdep = request.POST.get('urp_subdep', '')
+            dir = DirDepartament.objects.get(id=dir)
+            dep = Departament.objects.get(id=dep)
+            if subdep:
+                subdep = SubDepartament.objects.get(id=subdep)
+            else:
+                subdep = None
             bound_form = RegularReplacementPos_form(request.POST, instance=pos)
             if bound_form.is_valid():
-                bound_form.save()
+                bound_form.saveUpd(pos.id, dir, dep, subdep)
                 return render(request, 'RegRepl/close.html')
             else:
                 print(bound_form.errors.as_data())
@@ -176,9 +184,18 @@ def regpos_new(request,id):
             pos_form = RegularReplacementPos_form()
             return render(request, 'RegRepl/new_regpos.html', context={'form':pos_form, 'rr':rr})
         else:
+            dir = request.POST.get('nrp_dir', '')
+            dep = request.POST.get('nrp_dep', '')
+            subdep = request.POST.get('nrp_subdep', '')
+            dir = DirDepartament.objects.get(id=dir)
+            dep = Departament.objects.get(id=dep)
+            if subdep:
+                subdep = SubDepartament.objects.get(id=subdep)
+            else:
+                subdep = None
             pos_form = RegularReplacementPos_form(request.POST)
             if pos_form.is_valid():
-                pos_form.saveFirst(id)
+                pos_form.saveFirst(id, dir, dep, subdep)
                 loc = '/regrepl/create/' + str(id)
                 return redirect(loc)
 
@@ -194,16 +211,17 @@ def regrepl_copy(request):
         regrepl.save()
         new_rr = RegularReplacement.objects.filter(location_id=location).latest('id')
 
-        items_sub = RegularReplacementPos.objects.filter(bound_regrepl=old_regrepl)
+        items_sub = RegularReplacementPos.objects.filter(bound_regrepl=old_regrepl).order_by('id')
 
         for item in items_sub:
+            print(str(item.id) + " " + str(item.name))
             if item.disabled == False:
 
 
                 if not item.subdep_id:
 
                     item.subdep_id = None
-                    print(item.id)
+                    
 
                 item.bound_regrepl = new_rr
                 item.id = None
@@ -225,7 +243,7 @@ def regrepl_search(request, rr):
 def regrepl_json(request, type, id, rr):
     if request.user.is_authenticated:
         if type == 1:
-            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(dir_id=id).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(dir_id=id).values('id', 'bound_regrepl_id', 'name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
             'level',
             'cat_id',
             'cat__name',
@@ -246,7 +264,7 @@ def regrepl_json(request, type, id, rr):
             positions = list(positions)
             return JsonResponse(positions, safe=False)
         if type == 2:
-            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(dep_id=id).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(dep_id=id).values('id', 'bound_regrepl_id', 'name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
             'level',
             'cat__name',
             'cat_id',
@@ -263,10 +281,10 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('cat_id','dep_id', 'id', 'cat_id',  'subdep_id')
+            'disabled' ).order_by('subdep_id','cat_id','dep_id', 'id', 'cat_id')
             positions = list(positions)
         if type == 4:
-            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(cat_id=id).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(cat_id=id).values('id','name', 'bound_regrepl_id', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
             'level',
             'cat__name',
             'cat_id',
@@ -286,8 +304,8 @@ def regrepl_json(request, type, id, rr):
             'disabled' ).order_by('cat_id','dep_id', 'id', 'cat_id',  'subdep_id')
             positions = list(positions)
         if type == 5:
-            print(rr)
-            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).values('id','name', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
+
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).values('bound_regrepl_id', 'id','name', 'dir_id', 'dir__name', 'dep','dep__name', 'subdep' ,'subdep__name', 'units',
             'level',
             'cat__name',
             'cat_id',
@@ -304,7 +322,29 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('dir_id', 'dep_id', 'id', 'cat_id', 'subdep_id')
+            'disabled' ).order_by('dir_id',  'dep_id', 'subdep_id',  'cat__name', 'id' )
+            print(positions)
+            positions = list(positions)
+        if type == 6:
+
+            positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(free=1).values('bound_regrepl_id', 'id','name', 'dir_id', 'dir__name', 'dep','dep__name', 'subdep' ,'subdep__name', 'units',
+            'level',
+            'cat__name',
+            'cat_id',
+            'payment',
+            'salary',
+            'units_rr',
+            'level_rr',
+            'cat_rr__name',
+            'cat_rr_id',
+            'payment_rr',
+            'salary_rr',
+            'employer1',
+            'employer2',
+            'employer3',
+            'free',
+            'comm',
+            'disabled' ).order_by('dir_id',  'dep_id', 'subdep_id',  'cat__name', 'id' )
             print(positions)
             positions = list(positions)
 
@@ -341,7 +381,7 @@ def get_dirs(request):
 
 def get_deps(request):
     if request.user.is_authenticated:
-        deps = Departament.objects.values('id', 'name','dirdepartament__name').order_by('dirdepartament__name')
+        deps = Departament.objects.values('name', 'id', 'dirdepartament__name','dirdepartament__id').order_by('name', 'dirdepartament__name')
         deps = list(deps)
         return JsonResponse(deps, safe=False)
 
@@ -384,4 +424,28 @@ def new_dep(request):
                 dep_form.save()
                 dep_form.addtodir(dir)
                 loc = '/deps/'
+                return redirect(loc)
+
+def subdeps(request):
+    if request.user.is_authenticated:
+        return render(request, 'RegRepl/subdeps.html', context={})
+
+def get_subdeps(request):
+    if request.user.is_authenticated:
+        subdeps = SubDepartament.objects.values('name', 'id', 'departament__name','departament__id').order_by('name','departament__name')
+        subdeps = list(subdeps)
+        return JsonResponse(subdeps, safe=False)
+
+def new_subdep(request):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            subdep_form = SubDepartament_form()
+            return render(request, 'RegRepl/new_subdep.html', context={'form':subdep_form})
+        else:
+            dep = request.POST.get('nsd_dep', '')
+            subdep_form = SubDepartament_form(request.POST)
+            if subdep_form.is_valid():
+                subdep_form.save()
+                subdep_form.addtodep(dep)
+                loc = '/subdeps/'
                 return redirect(loc)

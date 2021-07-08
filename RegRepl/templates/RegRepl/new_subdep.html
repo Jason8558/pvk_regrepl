@@ -1,0 +1,23 @@
+{% extends "RegRepl/index.html"%}
+
+{%block title%}Новый сектор{%endblock%}
+{%block body%}
+<style media="screen">
+  header {
+    display: none;
+  }
+</style>
+
+
+<form class="newsubdep-form"  method="post">
+  {%csrf_token%}
+
+  {%for field in form%}
+  <p>{{field.label}}{{field}}</p>
+{%endfor%}
+<p><label for="nsd_dep">Относится к: </label><select id="nsd_dep" name="nsd_dep"></select></p>
+
+
+
+</form>
+{%endblock%}

@@ -14,9 +14,9 @@
     <div class="st_labels">
           <p style="visibility: hidden;" ><span>{{form.bound_regrepl.label}}</span> </p>
       <p><span>{{form.name.label}}</span></p>
-      <p><span>{{form.dir.label}}</span></p>
-      <p><span>{{form.dep.label}}</span></p>
-      <p><span>{{form.subdep.label}}</span></p>
+      <p><span><label for="nrp_dir">Дирекция</label></span></p>
+      <p><span><label for="nrp_dep">Подразделение (отдел)</label></span></p>
+      <p><span><label for="nrp_subdep">Субподразделение (сектор)</label></span></p>
       <p><span>{{form.units.label}}</span></p>
       <p><span>{{form.level.label}}</span></p>
       <p><span>{{form.cat.label}}</span></p>
@@ -27,11 +27,17 @@
 <p style="visibility: hidden;">    <span>{{form.bound_regrepl}}</span> </p>
   <p>  <span>{{form.name}}</span></p>
 
-  <p> <span>{{form.dir}}</span> </p>
+  <p> <span><select id="urp_dir" onchange="change_dir()" name="urp_dir">
 
-  <p> <span>{{form.dep}}</span> </p>
+  </select></span> </p>
 
-  <p> <span>{{form.subdep}}</span></p>
+  <p> <span><select onchange="change_dep()" id="urp_dep" name="urp_dep">
+
+  </select></span> </p>
+
+  <p> <span><select onchange="change_subdep()" id="urp_subdep" name="urp_subdep">
+  <option value="">НЕТ СЕКТОРА</option>
+  </select></span></p>
 
   <p> <span>{{form.units}}</span></p>
 

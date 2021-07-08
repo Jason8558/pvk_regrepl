@@ -10,7 +10,7 @@ function getdata() {
     type = $('#sm_type option:selected').val()
     object_id = $('#sm_main option:selected').val()
     rr_id = document.location.href.split('/')[5]
-    console.log(rr_id);
+
     query_url = '/regrepl/getdata/5/0/' + rr_id.toString()
 
     let dep_salary = 0
@@ -33,6 +33,7 @@ function getdata() {
 
 
       for (var i = 0; i < data.length; i++) {
+
       pos_free = ""
       pos_dis = ""
       cat_color = ""
@@ -105,7 +106,7 @@ function getdata() {
 
 
 
-      $('tbody').append('<tr style="' + pos_free + pos_dis + '" onclick="open_for_upd(' + data[i].id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name +  "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr + '</td><td style="' + cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name + '</td><td сlass="level_rr">' + data[i].level_rr + '</td><td class="payment_rr" >' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
+      $('tbody').append('<tr style="' + pos_free + pos_dis + '" onclick="open_for_upd(' + data[i].id + ',' + data[i].bound_regrepl_id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name +  "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr +  '</td><td сlass="level_rr">' + data[i].level_rr + '</td><td style="' + cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name  +  '</td><td class="payment_rr" >' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
 
 if (i != data.length-1) {
       if (data[i+1].subdep__name &&  data[i].subdep__name != data[i+1].subdep__name ) {
@@ -120,37 +121,48 @@ if (i != data.length-1) {
       dir_units_rr = dir_units_rr + dep_units_rr
 
       $('tbody').append( "<tr class='itogo'><td> Итого </td> <td>"+ dep_units +"</td><td></td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary) + "</td><td>"+ dep_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) +"</td> <td></td> <td></td><td></td><td></td><td></td></tr> ")
-      if ($('#sm_type option:selected').val() == 1) {
+
 
       $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td></td><td></td><td></td></tr> ")
-      }
+
 
       }
       else {
 
 
       if (data[i].dep__name != data[i+1].dep__name) {
-      $('tbody').append( "<tr class='itogo'><td> Итого </td> <td>"+ dep_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary) + "</td><td></td><td>"+ dep_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) +"</td> <td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) + "</td> <td></td><td></td><td></td><td></td></tr> ")
+        $('tbody').append( "<tr class='itogo'><td> Итого </td> <td>"+ dep_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary) + "</td><td></td><td>"+ dep_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) +"</td> <td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) + "</td> <td></td><td></td><td></td><td></td></tr> ")
 
 
-      if (data[i].dir__name != data[i+1].dir__name) {
+          if (data[i].dir__name != data[i+1].dir__name) {
+              dir_salary = dir_salary + dep_salary
+              dir_salary_rr = dir_salary_rr + dep_salary_rr
+              dir_units = dir_units + dep_units
+              dir_units_rr = dir_units_rr + dep_units_rr
+              $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td></td><td></td><td></td></tr> ")
+              $('tbody').append('<tr class="dir"  ><td colspan="17">' + data[i+1].dir__name + '</td></tr>')
+              dir_salary = 0
+              dir_salary_rr = 0
+              dir_units = 0
+              dir_units_rr = 0
+              dep_salary = 0
+              dep_salary_rr = 0
+              dep_units = 0
+              dep_units_rr = 0
+          }
+
+      $('tbody').append('<tr class="dep"  ><td colspan="17">' + data[i+1].dep__name + '</td></tr>')
+
         dir_salary = dir_salary + dep_salary
-            $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td></td><td></td><td></td></tr> ")
-        $('tbody').append('<tr class="dir"  ><td colspan="17">' + data[i+1].dir__name + '</td></tr>')
+        dir_salary_rr = dir_salary_rr + dep_salary_rr
+        dir_units = dir_units + dep_units
+        dir_units_rr = dir_units_rr + dep_units_rr
 
-      }
+        dep_salary = 0
+        dep_salary_rr = 0
+        dep_units = 0
+        dep_units_rr = 0
 
-    $('tbody').append('<tr class="dep"  ><td colspan="17">' + data[i+1].dep__name + '</td></tr>')
-
-      dir_salary = dir_salary + dep_salary
-      dir_salary_rr = dir_salary_rr + dep_salary_rr
-      dir_units = dir_units + dep_units
-      dir_units_rr = dir_units_rr + dep_units_rr
-
-      dep_salary = 0
-      dep_salary_rr = 0
-      dep_units = 0
-      dep_units_rr = 0
 
 
       }
