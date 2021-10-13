@@ -260,7 +260,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('cat_id', 'dep_id',  'id', 'subdep_id')
+            'disabled' ).order_by( 'dep_id',  'subdep_id', 'cat_id', 'id')
             positions = list(positions)
             return JsonResponse(positions, safe=False)
         if type == 2:
