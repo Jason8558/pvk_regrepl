@@ -281,7 +281,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('subdep_id','cat_id','dep_id', 'id', 'cat_id')
+            'disabled' ).order_by('cat_id', 'subdep_id','cat_id','dep_id', 'id')
             positions = list(positions)
         if type == 4:
             positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(cat_id=id).values('id','name', 'bound_regrepl_id', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
@@ -322,7 +322,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('dir_id',  'dep_id', 'subdep_id',  'cat_id', 'id' )
+            'disabled' ).order_by('cat_id', 'dir_id',  'dep_id', 'subdep_id', 'id' )
             print(positions)
             positions = list(positions)
         if type == 6:
@@ -344,7 +344,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('dir_id',  'dep_id', 'subdep_id',  'cat__name', 'id' )
+            'disabled' ).order_by('cat_id', 'dir_id',  'dep_id', 'subdep_id',   'id' )
             print(positions)
             positions = list(positions)
 
