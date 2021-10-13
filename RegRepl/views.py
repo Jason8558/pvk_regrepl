@@ -221,7 +221,7 @@ def regrepl_copy(request):
                 if not item.subdep_id:
 
                     item.subdep_id = None
-                    
+
 
                 item.bound_regrepl = new_rr
                 item.id = None
@@ -260,7 +260,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('dep_id', 'id', 'cat_id',  'subdep_id')
+            'disabled' ).order_by('dep_id', 'cat_id', 'id', 'subdep_id')
             positions = list(positions)
             return JsonResponse(positions, safe=False)
         if type == 2:
