@@ -20,7 +20,8 @@ def index(request):
 
 def regrepl_create(request, id):
     if request.user.is_authenticated:
-
+        not_free_pos = RegularReplacementPos.objects.filter(~Q(free))
+        not_free_pos_cnt = count(not_free_pos)
         dirs_search = request.GET.get('dir_search','')
         print(dirs_search)
         RegRepl = RegularReplacement.objects.get(id=id)
@@ -146,7 +147,7 @@ def regrepl_create(request, id):
     'd_salary_rr':d_salary_rr,
     'd_units':d_units,
     'd_units_rr':d_units_rr,
-        'd':d,'count':count, 'rr':RegRepl, 'positions':notinsectors, 'insectors':insectors, 'dirs':dirs, 'deps':deps, 'subdeps':subdeps})
+        'd':d,'count':count, 'rr':RegRepl, 'positions':notinsectors, 'insectors':insectors, 'dirs':dirs, 'deps':deps, 'subdeps':subdeps, 'not_free_pos_cnt':not_free_pos_cnt})
     else:
         return redirect('/accounts/login')
 
