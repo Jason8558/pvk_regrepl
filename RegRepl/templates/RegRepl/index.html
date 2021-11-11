@@ -11,15 +11,15 @@
 
   crossorigin="anonymous"></script>
   <script src="{% static 'js/updpos.js'%}" charset="utf-8"></script>
-  <script src="{% static 'js/search.js'%}" charset="utf-8"></script>
+  <script src="{% static 'js/search1.js'%}" charset="utf-8"></script>
   {%block script%}{%endblock%}
-  <link rel="stylesheet" href="{% static 'css\style2.css'%}">
+  <link rel="stylesheet" href="{% static 'css\style3.css'%}">
   <title>{%block title%}Штатное замещение{%endblock%}</title>
 </head>
 <body>
   <header>
     <div>
-    {%block header%}  <h1>Штатное замещение</h1> | <a href="{% url 'get_deps'%}"> Отделы </a> | <a href="{% url 'get_subdeps'%}"> Секторы </a>{%endblock%}
+    {%block header%}  <h1>Штатное замещение</h1>  <a href="{% url 'get_deps'%}"> Отделы </a>  <a href="{% url 'get_subdeps'%}"> Секторы </a>{%endblock%}
     </div>
   </header>
   {%block body%}
@@ -33,7 +33,7 @@
         <option value="{{loc.id}}">{{loc.name}}</option>
       {%endfor%}
       </select>
-      <input type="submit" value="Создать">
+      <input class="button" type="submit" value="Создать">
     </form>
 
 

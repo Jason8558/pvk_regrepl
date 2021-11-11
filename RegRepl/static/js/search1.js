@@ -53,6 +53,13 @@ break;
 
         break;
 
+  case '7':
+  $('#sm_btw_container').css('display', '')
+      $('#sm_main').css('display', '')
+      $('#sm_position').css('display', 'none')
+      $('#sm_main').append('<option value="1">ПКГО</option><option value="2">ЕМР</option>' )
+     break;
+
   default:
 
   }
@@ -67,12 +74,17 @@ function getdata() {
     if ($('#sm_type option:selected').val() == 3) {
               query_url = '/regrepl/getdata/getpos/' + rr_id.toString() +"/"+ $('#sm_position').val()
     }
+    // if ($('#sm_type option:selected').val() == 7) {
+    //   query_url = '/regrepl/getdata/' + type.toString() + "/" + ob
+    // }
     if ($('#sm_type option:selected').val() == 6) {
             query_url = '/regrepl/getdata/' + type.toString() + "/0/" + rr_id.toString()
     }
     else {
           query_url = '/regrepl/getdata/' + type.toString() + "/" + object_id.toString() + "/" + rr_id.toString()
     }
+
+
 
     let dep_salary = 0
     let dir_salary = 0
@@ -195,6 +207,11 @@ function getdata() {
       if ($('#sm_type option:selected').val() == 6) {
 
       $('tbody').append( "<tr class=diritogo><td>Итого по свободным ставкам </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td></td> <td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td><td></td><td></td><td></td></tr> ")
+      }
+
+      if ($('#sm_type option:selected').val() == 7) {
+
+      $('tbody').append( "<tr class=diritogo><td>Итого по "+ $('#sm_main option:selected').text()  +" </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td></td> <td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td><td></td><td></td><td></td></tr> ")
       }
 
       }

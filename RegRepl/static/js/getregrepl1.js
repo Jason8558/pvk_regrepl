@@ -12,6 +12,11 @@ function getdata() {
     rr_id = document.location.href.split('/')[5]
 
     query_url = '/regrepl/getdata/5/0/' + rr_id.toString()
+    let all_salary = 0
+    let all_salary_rr = 0
+    let all_units = 0
+    let all_units_rr = 0
+    let all_temp_pos = 0
 
     let dep_salary = 0
     let dir_salary = 0
@@ -23,6 +28,9 @@ function getdata() {
 
     let dep_units_rr = 0
     let dir_units_rr = 0
+
+    let dep_temp_pos = 0
+    let dir_temp_pos = 0
     first_sector = true
 
     $.getJSON(query_url,  (data) => {
@@ -44,12 +52,20 @@ function getdata() {
       dep_units = dep_units + parseFloat(data[i].units)
       dep_units_rr = dep_units_rr + parseFloat(data[i].units_rr)
 
+      all_units = all_units + parseFloat(data[i].units)
+      all_units_rr = all_units_rr + parseFloat(data[i].units_rr)
 
+      if (data[i].employer2 != '') {
+        dep_temp_pos = dep_temp_pos + 1
+        all_temp_pos = all_temp_pos + 1
+
+      }
 
       if (data[i].salary == "контракт") {
       salary = data[i].salary
       }
       else {
+      all_salary = all_salary + parseInt(data[i].salary, 10)
       dep_salary = dep_salary + parseInt(data[i].salary, 10)
       salary = new Intl.NumberFormat('ru-RU').format(data[i].salary)
       }
@@ -58,6 +74,7 @@ function getdata() {
       salary_rr = data[i].salary_rr
       }
       else {
+      all_salary_rr = all_salary_rr + parseInt(data[i].salary_rr, 10)
       dep_salary_rr = dep_salary_rr + parseInt(data[i].salary_rr, 10)
       salary_rr = new Intl.NumberFormat('ru-RU').format(data[i].salary_rr)
       }
@@ -119,19 +136,20 @@ if (i != data.length-1) {
       dir_salary_rr = dir_salary_rr + dep_salary_rr
       dir_units = dir_units + dep_units
       dir_units_rr = dir_units_rr + dep_units_rr
+      dir_temp_pos = dir_temp_pos + dep_temp_pos
 
-      $('tbody').append( "<tr class='itogo'><td> Итого </td> <td>"+ dep_units +"</td><td></td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary) + "</td><td>"+ dep_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) +"</td> <td></td> <td></td><td></td><td></td><td></td></tr> ")
-
-
-      $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td></td><td></td><td></td></tr> ")
+      $('tbody').append( "<tr class='itogo'><td> Итого </td> <td>"+ dep_units +"</td><td></td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary) + "</td><td>"+ dep_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) +"</td> <td></td> <td></td><td>временных: "+ dep_temp_pos +"</td><td></td><td></td></tr> ")
 
 
+      $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td>временных: "+ dir_temp_pos +"</td><td></td><td></td></tr> ")
+
+      $('tbody').append( "<tr class=all_itog><td> Итого по предприятию (филиалу): </td> <td>" + all_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(all_salary) + "</td><td></td><td>"+ all_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(all_salary_rr)+"</td> <td></td> <td></td><td>временных: "+ all_temp_pos +"</td><td></td><td></td></tr> ")
       }
       else {
 
 
       if (data[i].dep__name != data[i+1].dep__name) {
-        $('tbody').append( "<tr class='itogo'><td> Итого </td> <td>"+ dep_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary) + "</td><td></td><td>"+ dep_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) +"</td> <td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) + "</td> <td></td><td></td><td></td><td></td></tr> ")
+        $('tbody').append( "<tr class='itogo'><td> Итого </td> <td>"+ dep_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary) + "</td><td></td><td>"+ dep_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) +"</td> <td>" + new Intl.NumberFormat('ru-RU').format(dep_salary_rr) + "</td> <td></td><td>временных: "+ dep_temp_pos +"</td><td></td><td></td></tr> ")
 
 
           if (data[i].dir__name != data[i+1].dir__name) {
@@ -139,16 +157,20 @@ if (i != data.length-1) {
               dir_salary_rr = dir_salary_rr + dep_salary_rr
               dir_units = dir_units + dep_units
               dir_units_rr = dir_units_rr + dep_units_rr
-              $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td></td><td></td><td></td></tr> ")
+              dir_temp_pos = dir_temp_pos + dep_temp_pos
+              $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td>временных: "+ dir_temp_pos +"</td><td></td><td></td></tr> ")
               $('tbody').append('<tr class="dir"  ><td colspan="17">' + data[i+1].dir__name + '</td></tr>')
               dir_salary = 0
               dir_salary_rr = 0
               dir_units = 0
               dir_units_rr = 0
+              dir_temp_pos = 0
               dep_salary = 0
               dep_salary_rr = 0
               dep_units = 0
               dep_units_rr = 0
+              dep_temp_pos = 0
+
           }
 
       $('tbody').append('<tr class="dep"  ><td colspan="17">' + data[i+1].dep__name + '</td></tr>')
@@ -157,11 +179,13 @@ if (i != data.length-1) {
         dir_salary_rr = dir_salary_rr + dep_salary_rr
         dir_units = dir_units + dep_units
         dir_units_rr = dir_units_rr + dep_units_rr
+        dir_temp_pos = dir_temp_pos + dep_temp_pos
 
         dep_salary = 0
         dep_salary_rr = 0
         dep_units = 0
         dep_units_rr = 0
+        dep_temp_pos = 0
 
 
 

@@ -268,6 +268,7 @@ else {
   employer1 = $('#upd_frame').contents().find('#id_employer1').val()
   employer2 = $('#upd_frame').contents().find('#id_employer2').val()
   employer3 = $('#upd_frame').contents().find('#id_employer3').val()
+  comm = $('#upd_frame').contents().find('#id_comm').val()
   $('#' + id).find('.pname').text(nname)
   $('#' + id).find('.units').text(units)
   $('#' + id).find('.level').text(level)
@@ -282,6 +283,7 @@ else {
   $('#' + id).find('.employer1').text(employer1)
   $('#' + id).find('.employer2').text(employer2)
   $('#' + id).find('.employer3').text(employer3)
+  $('#' + id).find('.comm').text(comm)
 
   if (old_dep != dep) {
         background = 'pink'

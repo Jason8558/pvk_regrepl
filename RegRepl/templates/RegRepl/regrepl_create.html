@@ -3,7 +3,7 @@
 {%load static%}
 {%block script%}<script src="{% static 'js/getregrepl.js'%}" charset="utf-8"></script>{%endblock%}
 {%block header%}Штатное замещение за {{rr.duration|date:"d.m.Y"}} |
-<span style="font-size: 12pt;">Штат в количестве: <span style="color:blue;">{{count}}</span> единиц</span>
+
 <a class="search_button" href="{% url 'regpos_search' rr=rr.id%}">Поиск</a>
 
  <a href="/" class="button-back">Х</a>{%endblock%}
@@ -19,6 +19,10 @@
 </div>
 
 <a  class="button submit" href="{% url 'regpos_new' id=rr.id%}"> Ввести позицию штатного замещения </a>
+<div class="results">
+<h3>Кол-во по штатному расписанию: <span>{{count}}</span></h3>
+<h3>Кол-во по штатному замещению: <span>{{not_free_pos_cnt}}</span> из них: <span>{{temp_pos}}</span> временных</h3>
+</div>
 <table >
   <thead>
 

@@ -20,10 +20,13 @@ def index(request):
 
 def regrepl_create(request, id):
     if request.user.is_authenticated:
-        not_free_pos = RegularReplacementPos.objects.filter(~Q(free))
-        not_free_pos_cnt = count(not_free_pos)
+        not_free_pos = RegularReplacementPos.objects.filter(free=0).filter(bound_regrepl_id=id)
+        not_free_pos_cnt = len(not_free_pos)
+        temp_pos = RegularReplacementPos.objects.filter(~Q(employer2='')).filter(bound_regrepl_id=id)
+        print(len(temp_pos))
+        print(not_free_pos_cnt)
         dirs_search = request.GET.get('dir_search','')
-        print(dirs_search)
+
         RegRepl = RegularReplacement.objects.get(id=id)
         notinsectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(subdep=None).order_by('cat','id','dir')
         insectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(~Q(subdep=0)).order_by('dir').order_by('cat')
@@ -80,8 +83,7 @@ def regrepl_create(request, id):
         if dirs_search:
 
             notinsectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(dir_id=dirs_search)
-            for pos in positions:
-                print(pos.name)
+
             dir_salary_itogo = 0
             dir_salaryrr_itogo = 0
             dir_units_itogo = 0
@@ -147,7 +149,7 @@ def regrepl_create(request, id):
     'd_salary_rr':d_salary_rr,
     'd_units':d_units,
     'd_units_rr':d_units_rr,
-        'd':d,'count':count, 'rr':RegRepl, 'positions':notinsectors, 'insectors':insectors, 'dirs':dirs, 'deps':deps, 'subdeps':subdeps, 'not_free_pos_cnt':not_free_pos_cnt})
+        'd':d,'count':count, 'rr':RegRepl, 'positions':notinsectors, 'insectors':insectors, 'dirs':dirs, 'deps':deps, 'subdeps':subdeps, 'not_free_pos_cnt':not_free_pos_cnt, 'temp_pos':len(temp_pos)})
     else:
         return redirect('/accounts/login')
 
@@ -346,6 +348,48 @@ def regrepl_json(request, type, id, rr):
             'free',
             'comm',
             'disabled' ).order_by('cat_id', 'dir_id',  'dep_id', 'subdep_id',   'id' )
+            print(positions)
+            positions = list(positions)
+
+        if type == 7:
+            if id == 1:
+                positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(~Q(name__contains='ЕМР')).values('bound_regrepl_id', 'id','name', 'dir_id', 'dir__name', 'dep','dep__name', 'subdep' ,'subdep__name', 'units',
+                'level',
+                'cat__name',
+                'cat_id',
+                'payment',
+                'salary',
+                'units_rr',
+                'level_rr',
+                'cat_rr__name',
+                'cat_rr_id',
+                'payment_rr',
+                'salary_rr',
+                'employer1',
+                'employer2',
+                'employer3',
+                'free',
+                'comm',
+                'disabled' ).order_by('dir_id',  'dep_id',  'subdep_id', 'cat_id', 'id' )
+            else:
+                positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(name__contains='ЕМР').values('bound_regrepl_id', 'id','name', 'dir_id', 'dir__name', 'dep','dep__name', 'subdep' ,'subdep__name', 'units',
+                'level',
+                'cat__name',
+                'cat_id',
+                'payment',
+                'salary',
+                'units_rr',
+                'level_rr',
+                'cat_rr__name',
+                'cat_rr_id',
+                'payment_rr',
+                'salary_rr',
+                'employer1',
+                'employer2',
+                'employer3',
+                'free',
+                'comm',
+                'disabled' ).order_by('dir_id',  'dep_id',  'subdep_id', 'cat_id', 'id' )
             print(positions)
             positions = list(positions)
 
