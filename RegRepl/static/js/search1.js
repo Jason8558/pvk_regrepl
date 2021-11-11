@@ -74,9 +74,7 @@ function getdata() {
     if ($('#sm_type option:selected').val() == 3) {
               query_url = '/regrepl/getdata/getpos/' + rr_id.toString() +"/"+ $('#sm_position').val()
     }
-    // if ($('#sm_type option:selected').val() == 7) {
-    //   query_url = '/regrepl/getdata/' + type.toString() + "/" + ob
-    // }
+
     if ($('#sm_type option:selected').val() == 6) {
             query_url = '/regrepl/getdata/' + type.toString() + "/0/" + rr_id.toString()
     }

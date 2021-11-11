@@ -19,16 +19,20 @@
 </div>
 
 <a  class="button submit" href="{% url 'regpos_new' id=rr.id%}"> Ввести позицию штатного замещения </a>
+<input type="button" name="" onclick="set_head()" value="ТЕСТ!">
 <div class="results">
 <h3>Кол-во по штатному расписанию: <span>{{count}}</span></h3>
 <h3>Кол-во по штатному замещению: <span>{{not_free_pos_cnt}}</span> из них: <span>{{temp_pos}}</span> временных</h3>
 </div>
-<table >
+<div class="lock_table_head">
+  <table >
+
+
   <thead>
 
 
   <tr><th colspan="7">по штатному расписанию</th>  <th colspan="9">по штатному замещению</th> <th></th></tr>
-<tr class="verticalrow">
+<tr class="headcopy">
 
   <td>Должность</td>
     <td>Кол-во штатных ед-ц</td>
@@ -37,6 +41,39 @@
     <td>Ступень</td>
     <td>Базовая тарифная ставка</td>
     <td>Месячный тарифный ФЗП</td>
+
+
+    <td>Кол-во штатных ед-ц</td>
+    <td>Разряд</td>
+    <td>Категория</td>
+    <td>Ступень</td>
+    <td>Базовая тарифная ставка</td>
+    <td>Месячный тарифный ФЗП</td>
+    <td>ФИО работника</td>
+    <td>ФИО работника</td>
+    <td>ФИО работника</td>
+    <td>Комментарий</td>
+</tr>
+  </thead>
+  </table>
+</div>
+
+
+
+<table id="regrepl_table" onscroll="">
+  <thead>
+
+
+  <tr><th colspan="7">по штатному расписанию</th>  <th colspan="9">по штатному замещению</th> <th></th></tr>
+<tr class="verticalrow">
+
+  <td id="name">Должность</td>
+    <td id="units">Кол-во штатных ед-ц</td>
+    <td id="level">Разряд</td>
+    <td id="cat">Категория</td>
+    <td id="payment">Ступень</td>
+    <td id="salary">Базовая тарифная ставка</td>
+    <td id="salary2">Месячный тарифный ФЗП</td>
 
 
     <td>Кол-во штатных ед-ц</td>

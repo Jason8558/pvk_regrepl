@@ -30,7 +30,7 @@ width: 400px;
 }
 
 #id_name {
-  width: 100%;
+width: 100%;
 }
 
 body {
@@ -214,6 +214,17 @@ margin-right: 18px;
 
 .results span {
   color: blue;
+}
+
+.lock_table_head {
+  width: 1500px;
+  display: none;
+  position: fixed;
+  top: 0;
+}
+
+.lock_table_head table {
+  height: 100%
 }
 
 table {
