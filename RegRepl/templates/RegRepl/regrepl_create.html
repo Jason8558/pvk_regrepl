@@ -1,7 +1,7 @@
 {% extends "RegRepl/index.html"%}
 {% load humanize %}
 {%load static%}
-{%block script%}<script src="{% static 'js/getregrepl.js'%}" charset="utf-8"></script>{%endblock%}
+{%block script%}<script src="{% static 'js/getregrepl1.js'%}" charset="utf-8"></script>{%endblock%}
 {%block header%}Штатное замещение за {{rr.duration|date:"d.m.Y"}} |
 
 <a class="search_button" href="{% url 'regpos_search' rr=rr.id%}">Поиск</a>
