@@ -49,7 +49,7 @@ old_background =   $('#' + id).css('background')
   change_background(id, '#9dffa9')
 
   $('#' + id).css('box-shadow', '0px 0px 13px 0px black')
-  $('#' + id)[0].scrollIntoView({behavior: "smooth"})
+  
 
 $('.edit_frame').css('display', 'block')
 $.getJSON(query_url, (data) => {

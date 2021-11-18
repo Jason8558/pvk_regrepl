@@ -45,18 +45,14 @@ width: 100%;
 }
 
 header {
-
-width: 95%;
-
-height: min-content;
-
-margin: 26px auto;
-
-padding: 1em;
-border-radius: 17px;
-border: 2px solid #977390;
-background: white;
-box-shadow: 0px 0px 11px -2px black;
+/* width: 95%; */
+height: 39px;
+margin-bottom: 26px;
+padding: 1em;
+/* border-radius: 17px; */
+/* border: 2px solid #977390; */
+background: #5EBCFF;
+box-shadow: 0px 0px 11px -2px black;
 }
 
 header a {
@@ -94,12 +90,14 @@ border-radius: 12px;
 }
 
 header div {
-
-height: min-content;
+height: 100%;
 }
 
 header div h1 {
-  text-align: center;
+  text-align: left;
+  width: max-content;
+  margin: 0;
+  float: left;
 }
 
 .container {
@@ -144,23 +142,17 @@ margin: 0 auto;
 }
 
 .button {
-
-text-align: center;
-
-text-decoration: none;
-
-color: white;
-
-text-transform: uppercase;
-
-background: #1eab2f;
-
-padding: 6px;
-
-border-radius: 6px;
-
-transition: 0.3s;
+text-align: center;
+text-decoration: none;
+color: white;
+text-transform: uppercase;
+background: #1eab2f;
+/* padding: 6px; */
+border-radius: 6px;
+transition: 0.3s;
 }
+
+.add {width: 100% !important;float: right;}
 
 .button:hover {
 
@@ -283,9 +275,9 @@ font-weight: bolder;
 
 .notcaption:hover {
   cursor: pointer;
-  color: #43a047 !important;
+  color: #3a40ff !important;
   text-decoration: underline;
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 
 thead td {
@@ -302,14 +294,10 @@ background: white;
 }
 
 .dir {
-
-font-size: 16pt;
-
-font-weight: bold;
-
-background: #d87676 !important;
-
-color: black;
+font-size: 16pt;
+font-weight: bold;
+background: #1E6EA6 !important;
+color: black;
 }
 
 .dep {
@@ -355,6 +343,19 @@ color: black;
 font-weight: 800;
 }
 
+thead tr:first-child th {
+  background: #1E6EA6;
+  color: white;
+
+}
+
+thead tr:nth-child(2)  {
+  background: #659ABF;
+  color: black;
+
+}
+
+
 td {
 
 border: 1px solid black;
@@ -363,11 +364,11 @@ text-align: center;
 }
 
 tbody tr:nth-child(even) {
-  background: #cdf2cd;
+  background: #A6DAFF;
 }
 
 tbody tr {
-  transition: 0.3s;
+  /* transition: 0.3s; */
 }
 
 .posupd {
@@ -456,7 +457,27 @@ font-weight: bold;
 /* height: 483px; */
 }
 
+.buttons {
+  width: 100%;
+  float: left;
+}
+
+.buttons a{
+  margin-bottom: 9px;
+  width: 47% !important;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  /* height: 30px; */
+  padding: 7px;
+  border-radius: 6px;
+}
+
 .search_button {
+width: 100%;
+background: #A6DAFF;
+float: left;
 
 }
 

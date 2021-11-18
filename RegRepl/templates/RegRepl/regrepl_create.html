@@ -2,9 +2,9 @@
 {% load humanize %}
 {%load static%}
 {%block script%}<script src="{% static 'js/getregrepl1.js'%}" charset="utf-8"></script>{%endblock%}
-{%block header%}Штатное замещение за {{rr.duration|date:"d.m.Y"}} |
+{%block header%}<h1>Штатное замещение за {{rr.duration|date:"d.m.Y"}} </h1>
 
-<a class="search_button" href="{% url 'regpos_search' rr=rr.id%}">Поиск</a>
+
 
  <a href="/" class="button-back">Х</a>{%endblock%}
 
@@ -18,8 +18,12 @@
 <button type="button" class="button cancel" onclick="close_edit()"> Отмена </button>
 </div>
 
-<a  class="button submit" href="{% url 'regpos_new' id=rr.id%}"> Ввести позицию штатного замещения </a>
-<input type="button" name="" onclick="set_head()" value="ТЕСТ!">
+<div class="buttons">
+  <a class="search_button" href="{% url 'regpos_search' rr=rr.id%}">Поиск</a>
+  <a  class="button add submit" href="{% url 'regpos_new' id=rr.id%}"> + Ввести позицию штатного замещения </a>
+</div>
+
+
 <div class="results">
 <h3>Кол-во по штатному расписанию: <span>{{count}}</span></h3>
 <h3>Кол-во по штатному замещению: <span>{{not_free_pos_cnt}}</span> из них: <span>{{temp_pos}}</span> временных</h3>
