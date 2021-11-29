@@ -300,16 +300,16 @@ background: white;
 color: black;
 }
 
-.dep {
 
-font-weight: bold;
 
-text-decoration: underline;
+  .dep {
+      font-weight: bold;
+      text-decoration: underline;
+      background: #42dafc !important;
+      color: black;
+      text-transform: uppercase;
+  }
 
-background: #83cbff !important;
-
-color: black;
-}
 
 .subdep {
 
