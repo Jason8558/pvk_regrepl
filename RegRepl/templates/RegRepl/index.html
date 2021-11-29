@@ -16,6 +16,11 @@
   {%block script%}{%endblock%}
   <link rel="stylesheet" href="{% static 'css\style5.css'%}">
   <title>{%block title%}Штатное замещение{%endblock%}</title>
+  <style>
+    @media print {
+        .dir  { page-break-before: always;}
+    }
+</style>
 </head>
 <body>
   <header>

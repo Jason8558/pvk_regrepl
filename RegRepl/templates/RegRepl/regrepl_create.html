@@ -6,7 +6,7 @@
 
 
 
- <a href="/" class="button-back">Х</a>{%endblock%}
+ <a href="/" class="button-back noprint">Х</a>{%endblock%}
 
 {%block body%}
 <div class="container regrepl">
@@ -19,8 +19,8 @@
 </div>
 
 <div class="buttons">
-  <a class="search_button" href="{% url 'regpos_search' rr=rr.id%}">Поиск</a>
-  <a  class="button add submit" href="{% url 'regpos_new' id=rr.id%}"> + Ввести позицию штатного замещения </a>
+  <a class="search_button noprint" href="{% url 'regpos_search' rr=rr.id%}">Поиск</a>
+  <a  class="button add submit noprint" href="{% url 'regpos_new' id=rr.id%}"> + Ввести позицию штатного замещения </a>
 </div>
 
 

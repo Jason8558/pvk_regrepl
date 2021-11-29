@@ -550,3 +550,23 @@ width: 100%;
 .frame .cancel {
   margin: 0;
 }
+
+@media print {
+
+header h1 {
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.noprint {
+  display: none !important;
+}
+
+@page {
+  size: A4 landscape;
+  margin: 23.09px 0;
+}
+
+
+
+}
