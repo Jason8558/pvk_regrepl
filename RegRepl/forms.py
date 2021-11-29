@@ -45,6 +45,12 @@ class RegularReplacementPos_form(forms.ModelForm):
             "disabled"
         ]
 
+    salary = forms.CharField(label="Оклад по штатному расписанию", widget=forms.TextInput(
+            attrs={'onchange':'del_space()'}))
+
+    salary_rr = forms.CharField(label="Оклад по штатному замещению", widget=forms.TextInput(
+            attrs={'onchange':'del_space()'}))
+
     free = forms.BooleanField(label="Ставка свободна" , required=False, widget=forms.CheckboxInput(
             attrs={ 'id': 'id_free', 'onchange':'free_position()'}))
 
