@@ -71,16 +71,21 @@ function getdata() {
     type = $('#sm_type option:selected').val()
     object_id = $('#sm_main option:selected').val()
     rr_id = document.location.href.split('/')[6]
+    console.log($('#sm_type option:selected').val());
     if ($('#sm_type option:selected').val() == 3) {
+
               query_url = '/regrepl/getdata/getpos/' + rr_id.toString() +"/"+ $('#sm_position').val()
     }
-
-    if ($('#sm_type option:selected').val() == 6) {
-            query_url = '/regrepl/getdata/' + type.toString() + "/0/" + rr_id.toString()
-    }
     else {
-          query_url = '/regrepl/getdata/' + type.toString() + "/" + object_id.toString() + "/" + rr_id.toString()
+      if ($('#sm_type option:selected').val() == 6) {
+              query_url = '/regrepl/getdata/' + type.toString() + "/0/" + rr_id.toString()
+      }
+      else {
+            query_url = '/regrepl/getdata/' + type.toString() + "/" + object_id.toString() + "/" + rr_id.toString()
+      }
     }
+
+
 
 
 
