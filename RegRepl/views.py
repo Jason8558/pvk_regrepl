@@ -427,7 +427,7 @@ def get_dirs(request):
 
 def get_deps(request):
     if request.user.is_authenticated:
-        deps = Departament.objects.values('name', 'id', 'dirdepartament__name','dirdepartament__id').order_by('name', 'dirdepartament__name')
+        deps = Departament.objects.values('iter','name', 'id', 'dirdepartament__name','dirdepartament__id').order_by('iter','name', 'dirdepartament__name')
         deps = list(deps)
         return JsonResponse(deps, safe=False)
 

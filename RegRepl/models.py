@@ -57,7 +57,7 @@ class Departament(models.Model):
     subdep = models.ManyToManyField('SubDepartament',blank=True, verbose_name = 'Cубподразделения ')
     location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256,default='1')
     iter = models.IntegerField(verbose_name = 'Порядок ', default=1)
-    united_with = models.ForeignKey('Departament', on_delete=models.CASCADE, verbose_name='Объеденить с  ', max_length=256,default='1')
+
     class Meta:
         ordering = ["id"]
         verbose_name = 'Подразделение'

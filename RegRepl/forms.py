@@ -24,6 +24,7 @@ class RegularReplacementPos_form(forms.ModelForm):
         fields = [
             "bound_regrepl",
             "name",
+            "is_head",
             # "dir",
             # "dep",
             # "subdep",
