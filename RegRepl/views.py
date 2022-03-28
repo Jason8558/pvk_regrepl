@@ -508,8 +508,8 @@ def make_excel(request, rr):
         sheet = wb.add_sheet(str(regrepl.duration))
 
         style_free = xlwt.easyxf('pattern: pattern solid, fore_colour yellow')
-        style_dir = xlwt.easyxf('pattern: pattern solid, fore_colour 7; align: horiz center; borders: top thin, bottom thin, left thin, right thin ')
-        style_dep = xlwt.easyxf('pattern: pattern solid, fore_colour 48; align: horiz center')
+        style_dir = xlwt.easyxf('pattern: pattern solid, fore_colour 27; align: horiz center; borders: top thin, bottom thin, left thin, right thin ')
+        style_dep = xlwt.easyxf('pattern: pattern solid, fore_colour 44; align: horiz center')
         style_sdep = xlwt.easyxf('pattern: pattern solid, fore_colour 29; align: horiz center; font: italic 1')
         style_itog = xlwt.easyxf('pattern: pattern solid, fore_colour 22; align: horiz center; borders: top thin, bottom thin, left thin, right thin; font: bold 1  ')
         style_itog_dir = xlwt.easyxf('pattern: pattern solid, fore_colour 31; align: horiz center; borders: top thin, bottom thin, left thin, right thin; font: bold 1, height 250  ')
