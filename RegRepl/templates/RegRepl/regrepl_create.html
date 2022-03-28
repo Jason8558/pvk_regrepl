@@ -2,7 +2,7 @@
 {% load humanize %}
 {%load static%}
 {%block script%}<script src="{% static 'js/getregrepl1.js'%}" charset="utf-8"></script>{%endblock%}
-{%block header%}<h1>Штатное замещение за {{rr.duration|date:"d.m.Y"}} </h1>
+{%block header%}<h1>Штатное замещение за {{rr.duration|date:"d.m.Y"}} <a id="excel-button" href="{% url 'excel_url' rr=rr.id%}">Сформировать EXCEL</a></h1> 
 
 
 

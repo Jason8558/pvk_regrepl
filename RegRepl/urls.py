@@ -17,7 +17,8 @@ urlpatterns = [
     path('deps/', views.deps, name='get_deps'),
     path('deps/new', views.new_dep, name='new_dep'),
     path('subdeps/', views.subdeps, name='get_subdeps'),
-    path('subdeps/new', views.new_subdep, name='new_subdep')
+    path('subdeps/new', views.new_subdep, name='new_subdep'),
+    path('excel/<int:rr>', views.make_excel, name='excel_url')
 
 
 ]

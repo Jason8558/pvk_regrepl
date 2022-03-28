@@ -9,6 +9,8 @@ from itertools import groupby
 from django.contrib.auth.models import *
 from django.db.models import Q
 from collections import defaultdict
+import xlwt
+import os
 
 def index(request):
     if request.user.is_authenticated:
@@ -495,3 +497,257 @@ def new_subdep(request):
                 subdep_form.addtodep(dep)
                 loc = '/subdeps/'
                 return redirect(loc)
+
+def make_excel(request, rr):
+    if request.user.is_authenticated:
+        regrepl = RegularReplacement.objects.get(id=rr)
+        regreplpos = RegularReplacementPos.objects.filter(bound_regrepl=regrepl.id)
+        dirs = DirDepartament.objects.all()
+
+        wb = xlwt.Workbook()
+        sheet = wb.add_sheet(str(regrepl.duration))
+
+        style_free = xlwt.easyxf('pattern: pattern solid, fore_colour yellow')
+        style_dir = xlwt.easyxf('pattern: pattern solid, fore_colour 7; align: horiz center; borders: top thin, bottom thin, left thin, right thin ')
+        style_dep = xlwt.easyxf('pattern: pattern solid, fore_colour 48; align: horiz center')
+        style_sdep = xlwt.easyxf('pattern: pattern solid, fore_colour 29; align: horiz center; font: italic 1')
+        style_itog = xlwt.easyxf('pattern: pattern solid, fore_colour 22; align: horiz center; borders: top thin, bottom thin, left thin, right thin; font: bold 1  ')
+        style_itog_dir = xlwt.easyxf('pattern: pattern solid, fore_colour 31; align: horiz center; borders: top thin, bottom thin, left thin, right thin; font: bold 1, height 250  ')
+        style_itog_all = xlwt.easyxf('pattern: pattern solid, fore_colour 2; align: horiz center; borders: top thin, bottom thin, left thin, right thin; font: bold 1, height 500   ')
+
+        i = 2
+        all_itog = 0
+        all_salary = 0
+        allitog_rr = 0
+        allitog_salary = 0
+        allitog_rr = 0
+        allitog_salary_rr = 0
+        allitog_temp = 0
+
+        sheet.write_merge(0,0,0,6, 'По штатному расписанию', style_dir)
+        sheet.write_merge(0,0,7,15, 'По штатному замещению', style_dir)
+
+        sheet.write(1,0, 'Должность')
+        sheet.write(1,1, 'Ед.')
+        sheet.write(1,2, 'Разр.')
+        sheet.write(1,3, 'Кат.')
+        sheet.write(1,4, 'Ступ.')
+        sheet.write(1,5, 'БТС')
+        sheet.write(1,6, 'МФЗП')
+
+        sheet.write(1,7, 'Ед.')
+        sheet.write(1,8, 'Разр.')
+        sheet.write(1,9, 'Кат.')
+        sheet.write(1,10, 'Ступ.')
+        sheet.write(1,11, 'БТС')
+        sheet.write(1,12, 'МФЗП')
+        sheet.write(1,13, 'ФИО')
+        sheet.write(1,14, 'ФИО Вр.')
+        sheet.write(1,15, 'ФИО Вр.')
+
+        for dir in dirs:
+            diritog = 0
+            diritog_salary = 0
+            diritog_rr = 0
+            diritog_salary = 0
+            diritog_rr = 0
+            diritog_salary_rr = 0
+            diritog_temp = 0
+            sheet.write_merge(i,i,0,15, dir.name, style_dir)
+            i = i+1
+            for dep in dir.dep.all():
+                depitog = 0
+                depitog_rr = 0
+                depitog_salary = 0
+                depitog_rr = 0
+                depitog_salary_rr = 0
+                depitog_temp = 0
+                sheet.write_merge(i,i,0,15, dep.name, style_dep)
+                i = i+1
+                pos  = RegularReplacementPos.objects.filter(bound_regrepl=regrepl.id).filter(dep_id=dep.id).filter(subdep=None).order_by('-payment')
+                for p in pos:
+
+                    depitog = depitog + p.units
+                    depitog_rr = depitog_rr + p.units_rr
+
+                    if p.salary == 'контракт':
+                        depitog_salary = int(depitog_salary) + 0
+                        depitog_salary_rr =  int(depitog_salary_rr) + 0
+                    else:
+                        depitog_salary = depitog_salary + int(p.salary)
+                        depitog_salary_rr = depitog_salary_rr + int(p.salary_rr)
+
+                    if p.employer2:
+                        depitog_temp = depitog_temp + 1
+                    else:
+                        pass
+
+                    if p.free:
+                        sheet.write(i,0, p.name, style_free)
+                        sheet.write(i,1, p.units, style_free)
+                        sheet.write(i,2, p.level, style_free)
+                        sheet.write(i,3, p.cat_id, style_free)
+                        sheet.write(i,4, p.payment, style_free)
+                        sheet.write(i,5, p.salary, style_free)
+                        sheet.write(i,6, p.salary, style_free)
+
+                        sheet.write(i,7, p.units_rr, style_free)
+                        sheet.write(i,8, p.level_rr, style_free)
+                        sheet.write(i,9, p.cat_rr_id, style_free)
+                        sheet.write(i,10, p.payment_rr, style_free)
+                        sheet.write(i,11, p.salary_rr, style_free)
+                        sheet.write(i,12, p.salary_rr, style_free)
+                        sheet.write(i,13, p.employer1, style_free)
+                        sheet.write(i,14, p.employer2, style_free)
+                        sheet.write(i,15, p.employer3, style_free)
+
+                    else:
+                        sheet.write(i,0, p.name)
+                        sheet.write(i,1, p.units)
+                        sheet.write(i,2, p.level)
+                        sheet.write(i,3, p.cat_id)
+                        sheet.write(i,4, p.payment)
+                        sheet.write(i,5, p.salary)
+                        sheet.write(i,6, p.salary)
+
+                        sheet.write(i,7, p.units_rr)
+                        sheet.write(i,8, p.level_rr)
+                        sheet.write(i,9, p.cat_rr_id)
+                        sheet.write(i,10, p.payment_rr)
+                        sheet.write(i,11, p.salary_rr)
+                        sheet.write(i,12, p.salary_rr)
+                        sheet.write(i,13, p.employer1)
+                        sheet.write(i,14, p.employer2)
+                        sheet.write(i,15, p.employer3)
+                    i = i+1
+                for s in dep.subdep.all():
+                    sheet.write_merge(i,i,0,15, s.name, style_sdep)
+                    i = i+1
+                    pos  = RegularReplacementPos.objects.filter(bound_regrepl=regrepl.id).filter(dep_id=dep.id).filter(subdep=s.id)
+                    for p in pos:
+                        if p.free:
+                            sheet.write(i,0, p.name, style_free)
+                            sheet.write(i,1, p.units, style_free)
+                            sheet.write(i,2, p.level, style_free)
+                            sheet.write(i,3, p.cat_id, style_free)
+                            sheet.write(i,4, p.payment, style_free)
+                            sheet.write(i,5, p.salary, style_free)
+                            sheet.write(i,6, p.salary, style_free)
+
+                            sheet.write(i,7, p.units_rr, style_free)
+                            sheet.write(i,8, p.level_rr, style_free)
+                            sheet.write(i,9, p.cat_rr_id, style_free)
+                            sheet.write(i,10, p.payment_rr, style_free)
+                            sheet.write(i,11, p.salary_rr, style_free)
+                            sheet.write(i,12, p.salary_rr, style_free)
+                            sheet.write(i,13, p.employer1, style_free)
+                            sheet.write(i,14, p.employer2, style_free)
+                            sheet.write(i,15, p.employer3, style_free)
+
+                        else:
+                            sheet.write(i,0, p.name)
+                            sheet.write(i,1, p.units)
+                            sheet.write(i,2, p.level)
+                            sheet.write(i,3, p.cat_id)
+                            sheet.write(i,4, p.payment)
+                            sheet.write(i,5, p.salary)
+                            sheet.write(i,6, p.salary)
+
+                            sheet.write(i,7, p.units_rr)
+                            sheet.write(i,8, p.level_rr)
+                            sheet.write(i,9, p.cat_rr_id)
+                            sheet.write(i,10, p.payment_rr)
+                            sheet.write(i,11, p.salary_rr)
+                            sheet.write(i,12, p.salary_rr)
+                            sheet.write(i,13, p.employer1)
+                            sheet.write(i,14, p.employer2)
+                            sheet.write(i,15, p.employer3)
+                        i=i+1
+
+                # Стиль итогов
+                sheet.write(i,0, 'Итого по: ' + str(dep.name), style_itog)
+                sheet.write(i,1, depitog, style_itog)
+                sheet.write(i,2, '', style_itog)
+                sheet.write(i,3, '', style_itog)
+                sheet.write(i,4, '', style_itog)
+                sheet.write(i,5, '', style_itog)
+                sheet.write(i,6, depitog_salary, style_itog)
+                sheet.write(i,7, depitog_rr, style_itog)
+                sheet.write(i,8, '', style_itog)
+                sheet.write(i,9, '', style_itog)
+                sheet.write(i,10, '', style_itog)
+                sheet.write(i,11, '', style_itog)
+                sheet.write(i,12, depitog_salary_rr, style_itog)
+                sheet.write(i,13, '', style_itog)
+                sheet.write(i,14, 'Временных: ' + str(depitog_temp), style_itog)
+                sheet.write(i,15, '', style_itog)
+                # --------------------------------------------------------
+
+                diritog = diritog + depitog
+                diritog_salary = diritog_salary + depitog_salary
+                diritog_rr = diritog_rr + depitog_rr
+                diritog_salary_rr = diritog_salary_rr + depitog_salary_rr
+                diritog_temp = diritog_temp + depitog_temp
+
+                i=i+1
+            # Стиль итогов
+            sheet.write(i,0, 'Итого по: ' + str(dir.name), style_itog_dir)
+            sheet.write(i,1, diritog, style_itog_dir)
+            sheet.write(i,2, '', style_itog_dir)
+            sheet.write(i,3, '', style_itog_dir)
+            sheet.write(i,4, '', style_itog_dir)
+            sheet.write(i,5, '', style_itog_dir)
+            sheet.write(i,6, diritog_salary, style_itog_dir)
+            sheet.write(i,7, diritog_rr, style_itog_dir)
+            sheet.write(i,8, '', style_itog_dir)
+            sheet.write(i,9, '', style_itog_dir)
+            sheet.write(i,10, '', style_itog_dir)
+            sheet.write(i,11, '', style_itog_dir)
+            sheet.write(i,12, diritog_salary_rr, style_itog_dir)
+            sheet.write(i,13, '', style_itog_dir)
+            sheet.write(i,14, 'Временных: ' + str(diritog_temp), style_itog_dir)
+            sheet.write(i,15, '', style_itog_dir)
+            # --------------------------------------------------------
+            all_itog = all_itog + diritog
+            all_salary = all_salary + diritog_salary
+            allitog_rr = allitog_rr + diritog_rr
+            allitog_salary_rr = allitog_salary_rr + diritog_salary_rr
+            allitog_temp = allitog_temp + diritog_temp
+            i=i+1
+        # Стиль итогов
+        sheet.write(i,0, 'Итого по предприятию: ', style_itog_all)
+        sheet.write(i,1, all_itog, style_itog_all)
+        sheet.write(i,2, '', style_itog_all)
+        sheet.write(i,3, '', style_itog_all)
+        sheet.write(i,4, '', style_itog_all)
+        sheet.write(i,5, '', style_itog_all)
+        sheet.write(i,6, all_salary, style_itog_all)
+        sheet.write(i,7, allitog_rr, style_itog_all)
+        sheet.write(i,8, '', style_itog_all)
+        sheet.write(i,9, '', style_itog_all)
+        sheet.write(i,10, '', style_itog_all)
+        sheet.write(i,11, '', style_itog_all)
+        sheet.write(i,12, allitog_salary_rr, style_itog_all)
+        sheet.write(i,13, '', style_itog_all)
+        sheet.write(i,14, allitog_temp, style_itog_all)
+        sheet.write(i,15, '', style_itog_all)
+        # --------------------------------------------------------
+
+
+
+
+        name = str(regrepl.duration) + '.xls'
+
+        wb.save(name)
+
+        fp = open(name, "rb")
+        response = HttpResponse(fp.read())
+        fp.close();
+
+        file_type = 'application/octet-stream'
+        response['Content-Type'] = file_type
+        response['Content-Length'] = str(os.stat(name).st_size)
+        print(name)
+        response['Content-Disposition'] = "attachment; filename=%s" %name
+
+        return response;
