@@ -328,7 +328,7 @@ def regrepl_json(request, type, id, rr):
             'free',
             'comm',
             'disabled' ,
-            'is_head').order_by(   'dir_id__iter', 'dep_id', 'subdep_id', '-is_head', 'cat_id', 'id' )
+            'is_head').order_by(   'dir_id__iter', 'dep_id__iter', 'subdep_id', '-is_head', 'cat_id', 'id' )
             print(positions)
             positions = list(positions)
         if type == 6:
@@ -502,12 +502,16 @@ def make_excel(request, rr):
     if request.user.is_authenticated:
         regrepl = RegularReplacement.objects.get(id=rr)
         regreplpos = RegularReplacementPos.objects.filter(bound_regrepl=regrepl.id)
-        dirs = DirDepartament.objects.all()
+        dirs = DirDepartament.objects.all().filter(location_id=1)
 
         wb = xlwt.Workbook()
         sheet = wb.add_sheet(str(regrepl.duration))
 
-        style_free = xlwt.easyxf('pattern: pattern solid, fore_colour yellow')
+        style = xlwt.easyxf('borders: top thin, bottom thin, left thin, right thin')
+        style_free = xlwt.easyxf('pattern: pattern solid, fore_colour yellow; borders: top thin, bottom thin, left thin, right thin')
+        style_prof = xlwt.easyxf('font: colour pink; align: horiz center; borders: top thin, bottom thin, left thin, right thin ')
+        style_head = xlwt.easyxf(' font: colour red; align: horiz center; borders: top thin, bottom thin, left thin, right thin ')
+        style_work = xlwt.easyxf(' font: colour blue; align: horiz center; borders: top thin, bottom thin, left thin, right thin ')
         style_dir = xlwt.easyxf('pattern: pattern solid, fore_colour 27; align: horiz center; borders: top thin, bottom thin, left thin, right thin ')
         style_dep = xlwt.easyxf('pattern: pattern solid, fore_colour 44; align: horiz center')
         style_sdep = xlwt.easyxf('pattern: pattern solid, fore_colour 29; align: horiz center; font: italic 1')
@@ -564,7 +568,7 @@ def make_excel(request, rr):
                 depitog_temp = 0
                 sheet.write_merge(i,i,0,15, dep.name, style_dep)
                 i = i+1
-                pos  = RegularReplacementPos.objects.filter(bound_regrepl=regrepl.id).filter(dep_id=dep.id).filter(subdep=None).order_by('-payment')
+                pos  = RegularReplacementPos.objects.filter(bound_regrepl=regrepl.id).filter(dep_id=dep.id).filter(subdep=None).order_by('cat_id', '-payment')
                 for p in pos:
 
                     depitog = depitog + p.units
@@ -586,14 +590,14 @@ def make_excel(request, rr):
                         sheet.write(i,0, p.name, style_free)
                         sheet.write(i,1, p.units, style_free)
                         sheet.write(i,2, p.level, style_free)
-                        sheet.write(i,3, p.cat_id, style_free)
+                        sheet.write(i,3, p.cat.name, style_free)
                         sheet.write(i,4, p.payment, style_free)
                         sheet.write(i,5, p.salary, style_free)
                         sheet.write(i,6, p.salary, style_free)
 
                         sheet.write(i,7, p.units_rr, style_free)
                         sheet.write(i,8, p.level_rr, style_free)
-                        sheet.write(i,9, p.cat_rr_id, style_free)
+                        sheet.write(i,9, p.cat_rr.name, style_free)
                         sheet.write(i,10, p.payment_rr, style_free)
                         sheet.write(i,11, p.salary_rr, style_free)
                         sheet.write(i,12, p.salary_rr, style_free)
@@ -602,23 +606,34 @@ def make_excel(request, rr):
                         sheet.write(i,15, p.employer3, style_free)
 
                     else:
-                        sheet.write(i,0, p.name)
-                        sheet.write(i,1, p.units)
-                        sheet.write(i,2, p.level)
-                        sheet.write(i,3, p.cat_id)
-                        sheet.write(i,4, p.payment)
-                        sheet.write(i,5, p.salary)
-                        sheet.write(i,6, p.salary)
+                        sheet.write(i,0, p.name, style)
+                        sheet.write(i,1, p.units, style)
+                        sheet.write(i,2, p.level, style)
+                        if p.cat_id == 1:
+                            sheet.write(i,3, p.cat.name, style_head)
+                        if p.cat_id == 2:
+                            sheet.write(i,3, p.cat.name, style_prof)
+                        if p.cat_id == 3:
+                            sheet.write(i,3, p.cat.name, style_work)
 
-                        sheet.write(i,7, p.units_rr)
-                        sheet.write(i,8, p.level_rr)
-                        sheet.write(i,9, p.cat_rr_id)
-                        sheet.write(i,10, p.payment_rr)
-                        sheet.write(i,11, p.salary_rr)
-                        sheet.write(i,12, p.salary_rr)
-                        sheet.write(i,13, p.employer1)
-                        sheet.write(i,14, p.employer2)
-                        sheet.write(i,15, p.employer3)
+                        sheet.write(i,4, p.payment, style)
+                        sheet.write(i,5, p.salary, style)
+                        sheet.write(i,6, p.salary, style)
+
+                        sheet.write(i,7, p.units_rr, style)
+                        sheet.write(i,8, p.level_rr, style)
+                        if p.cat_rr_id == 1:
+                            sheet.write(i,9, p.cat_rr.name, style_head)
+                        if p.cat_rr_id == 2:
+                            sheet.write(i,9, p.cat_rr.name, style_prof)
+                        if p.cat_rr_id == 3:
+                            sheet.write(i,9,p.cat_rr.name, style_work)
+                        sheet.write(i,10, p.payment_rr, style)
+                        sheet.write(i,11, p.salary_rr, style)
+                        sheet.write(i,12, p.salary_rr, style)
+                        sheet.write(i,13, p.employer1, style)
+                        sheet.write(i,14, p.employer2, style)
+                        sheet.write(i,15, p.employer3, style)
                     i = i+1
                 for s in dep.subdep.all():
                     sheet.write_merge(i,i,0,15, s.name, style_sdep)
@@ -660,23 +675,33 @@ def make_excel(request, rr):
                             sheet.write(i,15, p.employer3, style_free)
 
                         else:
-                            sheet.write(i,0, p.name)
-                            sheet.write(i,1, p.units)
-                            sheet.write(i,2, p.level)
-                            sheet.write(i,3, p.cat_id)
-                            sheet.write(i,4, p.payment)
-                            sheet.write(i,5, p.salary)
-                            sheet.write(i,6, p.salary)
+                            sheet.write(i,0, p.name, style)
+                            sheet.write(i,1, p.units, style)
+                            sheet.write(i,2, p.level, style)
+                            if p.cat_id == 1:
+                                sheet.write(i,3, p.cat.name, style_head)
+                            if p.cat_id == 2:
+                                sheet.write(i,3, p.cat.name, style_prof)
+                            if p.cat_id == 3:
+                                sheet.write(i,3, p.cat.name, style_work)
+                            sheet.write(i,4, p.payment, style)
+                            sheet.write(i,5, p.salary, style)
+                            sheet.write(i,6, p.salary, style)
 
-                            sheet.write(i,7, p.units_rr)
-                            sheet.write(i,8, p.level_rr)
-                            sheet.write(i,9, p.cat_rr_id)
-                            sheet.write(i,10, p.payment_rr)
-                            sheet.write(i,11, p.salary_rr)
-                            sheet.write(i,12, p.salary_rr)
-                            sheet.write(i,13, p.employer1)
-                            sheet.write(i,14, p.employer2)
-                            sheet.write(i,15, p.employer3)
+                            sheet.write(i,7, p.units_rr, style)
+                            sheet.write(i,8, p.level_rr, style)
+                            if p.cat_rr_id == 1:
+                                sheet.write(i,9, p.cat_rr.name, style_head)
+                            if p.cat_rr_id == 2:
+                                sheet.write(i,9, p.cat_rr.name, style_prof)
+                            if p.cat_rr_id == 3:
+                                sheet.write(i,9,p.cat_rr.name, style_work)
+                            sheet.write(i,10, p.payment_rr, style)
+                            sheet.write(i,11, p.salary_rr, style)
+                            sheet.write(i,12, p.salary_rr, style)
+                            sheet.write(i,13, p.employer1, style)
+                            sheet.write(i,14, p.employer2, style)
+                            sheet.write(i,15, p.employer3, style)
                         i=i+1
 
                 # Стиль итогов
