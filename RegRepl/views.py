@@ -328,7 +328,7 @@ def regrepl_json(request, type, id, rr):
             'free',
             'comm',
             'disabled' ,
-            'is_head').order_by(   'dir_id', 'dep_id', 'subdep_id', '-is_head', 'cat_id', 'id' )
+            'is_head').order_by(   'dir_id__iter', 'dep_id', 'subdep_id', '-is_head', 'cat_id', 'id' )
             print(positions)
             positions = list(positions)
         if type == 6:
@@ -625,6 +625,21 @@ def make_excel(request, rr):
                     i = i+1
                     pos  = RegularReplacementPos.objects.filter(bound_regrepl=regrepl.id).filter(dep_id=dep.id).filter(subdep=s.id)
                     for p in pos:
+                        depitog = depitog + p.units
+                        depitog_rr = depitog_rr + p.units_rr
+
+                        if p.salary == 'контракт':
+                            depitog_salary = int(depitog_salary) + 0
+                            depitog_salary_rr =  int(depitog_salary_rr) + 0
+                        else:
+                            depitog_salary = depitog_salary + int(p.salary)
+                            depitog_salary_rr = depitog_salary_rr + int(p.salary_rr)
+
+                        if p.employer2:
+                            depitog_temp = depitog_temp + 1
+                        else:
+                            pass
+
                         if p.free:
                             sheet.write(i,0, p.name, style_free)
                             sheet.write(i,1, p.units, style_free)

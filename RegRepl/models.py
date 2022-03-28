@@ -43,8 +43,9 @@ class DirDepartament(models.Model):
     name = models.CharField(max_length=256,  help_text="Введите название дирекции", verbose_name="Название дирекции ", db_index=True)
     dep = models.ManyToManyField('Departament', blank=True,verbose_name = 'Подразделения ')
     location = models.ForeignKey('Location', on_delete=models.CASCADE, verbose_name='Территория ', max_length=256,  default='1')
+    iter = models.IntegerField(verbose_name = 'Порядок ', default=1)
     class Meta:
-        ordering = ["id"]
+        ordering = ["iter"]
         verbose_name = 'Дирекция'
 
     def __str__(self):
@@ -59,7 +60,7 @@ class Departament(models.Model):
     iter = models.IntegerField(verbose_name = 'Порядок ', default=1)
 
     class Meta:
-        ordering = ["id"]
+        ordering = ["iter"]
         verbose_name = 'Подразделение'
 
     def __str__(self):
