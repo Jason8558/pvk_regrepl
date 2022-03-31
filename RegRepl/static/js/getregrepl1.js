@@ -210,6 +210,34 @@ if (i != data.length-1) {
     })
 
 setTimeout(() => $('#loading').remove(), 2000)
+// styling for excel
+setTimeout(() => $('.dep').css('background', 'lightblue'), 3000)
+setTimeout(() => $('.dep').css('text-align', 'center'), 3000)
+setTimeout(() => $('.dep td').css('border', '1px solid black'), 3000)
+
+setTimeout(() => $('.subdep').css('color', 'red'), 3000)
+setTimeout(() => $('.subdep').css('text-align', 'center'), 3000)
+setTimeout(() => $('.subdep td').css('border', '1px solid black'), 3000)
+setTimeout(() => $('.subdep td').css('text-decoration', 'underline'), 3000)
+
+setTimeout(() => $('.dir').css('background', 'blue'), 3000)
+setTimeout(() => $('.dir').css('text-align', 'center'), 3000)
+setTimeout(() => $('.dir').css('font-size', '12pt'), 3000)
+setTimeout(() => $('.dir').css('color', 'white'), 3000)
+setTimeout(() => $('.dir').css('font-weight', 'bold'), 3000)
+setTimeout(() => $('.dir td').css('border', '1px solid black'), 3000)
+
+setTimeout(() => $('.itogo').css('background', 'gray'), 3000)
+setTimeout(() => $('.itogo').css('border', '1px solid white'), 3000)
+setTimeout(() => $('.diritogo').css('background', 'darkgray'), 3000)
+setTimeout(() => $('.diritogo').css('border', '1px solid white'), 3000)
+
+setTimeout(() => $('.all_itog').css('font-size', '14pt'), 3000)
+setTimeout(() => $('.all_itog').css('background', 'green'), 3000)
+setTimeout(() => $('.all_itog').css('font-weight', 'bold'), 3000)
+setTimeout(() => $('.all_itog').css('border', '1px solid white'), 3000)
+
+setTimeout(() => $('.notcaption').css('border', '1px solid lightgrey'), 3000)
 
 
     }

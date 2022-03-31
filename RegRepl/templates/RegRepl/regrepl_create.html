@@ -2,7 +2,7 @@
 {% load humanize %}
 {%load static%}
 {%block script%}<script src="{% static 'js/getregrepl1.js'%}" charset="utf-8"></script>{%endblock%}
-{%block header%}<h1>Штатное замещение за {{rr.duration|date:"d.m.Y"}} <a id="excel-button" href="{% url 'excel_url' rr=rr.id%}">Сформировать EXCEL</a></h1> 
+{%block header%}<h1>Штатное замещение за {{rr.duration|date:"d.m.Y"}} <button type="button" onclick="tableToExcel('regrepl_table','Штатное', 'Штатное замещение {{rr.duration|date:'d.m.Y'}}.xls');" name="button">Сформировать EXEL</button></h1>
 
 
 
@@ -72,24 +72,24 @@
 <tr class="verticalrow">
 
   <td id="name">Должность</td>
-    <td id="units">Кол-во штатных ед-ц</td>
-    <td id="level">Разряд</td>
-    <td id="cat">Категория</td>
-    <td id="payment">Ступень</td>
-    <td id="salary">Базовая тарифная ставка</td>
-    <td id="salary2">Месячный тарифный ФЗП</td>
+    <td style="transform: rotate(90deg);" id="units">Кол-во штатных ед-ц</td>
+    <td style="transform: rotate(90deg);" id="level">Разряд</td>
+    <td style="transform: rotate(90deg);" id="cat">Категория</td>
+    <td style="transform: rotate(90deg);" id="payment">Ступень</td>
+    <td style="transform: rotate(90deg);" id="salary">Базовая тарифная ставка</td>
+    <td style="transform: rotate(90deg);" id="salary2">Месячный тарифный ФЗП</td>
 
 
-    <td>Кол-во штатных ед-ц</td>
-    <td>Разряд</td>
-    <td>Категория</td>
-    <td>Ступень</td>
-    <td>Базовая тарифная ставка</td>
-    <td>Месячный тарифный ФЗП</td>
-    <td>ФИО работника</td>
-    <td>ФИО работника</td>
-    <td>ФИО работника</td>
-    <td>Комментарий</td>
+    <td style="transform: rotate(90deg);">Кол-во штатных ед-ц</td>
+    <td style="transform: rotate(90deg);">Разряд</td>
+    <td style="transform: rotate(90deg);">Категория</td>
+    <td style="transform: rotate(90deg);">Ступень</td>
+    <td style="transform: rotate(90deg);">Базовая тарифная ставка</td>
+    <td style="transform: rotate(90deg);">Месячный тарифный ФЗП</td>
+    <td style="transform: rotate(90deg);">ФИО работника</td>
+    <td style="transform: rotate(90deg);">ФИО работника</td>
+    <td style="transform: rotate(90deg);">ФИО работника</td>
+    <td style="transform: rotate(90deg);">Комментарий</td>
 </tr>
   </thead>
 
@@ -99,4 +99,36 @@
 </table>
 <h1 id="loading">Данные загружаются ...</h1>
 </div>
+
+<script type="text/javascript">
+  $('#regrepl_table').ready(function () {
+
+
+
+  })
+
+  var tableToExcel = (function() {
+  		var uri = 'data:application/vnd.ms-excel;base64,'
+  		, template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+  		, base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+  		, format = function(s, c) {
+  			return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; })
+  		}
+  		, downloadURI = function(uri, name) {
+  		    var link = document.createElement("a");
+  		    link.download = name;
+  		    link.href = uri;
+  		    link.click();
+  		}
+
+  		return function(table, name, fileName) {
+  			if (!table.nodeType) table = document.getElementById(table)
+  				var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+  			var resuri = uri + base64(format(template, ctx))
+  			downloadURI(resuri, fileName);
+  		}
+  	})();
+
+</script>
+
 {%endblock%}
