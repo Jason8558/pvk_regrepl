@@ -46,6 +46,7 @@ function getdata() {
       pos_dis = ""
       cat_color = ""
       cat_rr_color = ""
+      idd = ""
 
 
 
@@ -54,6 +55,11 @@ function getdata() {
 
       all_units = all_units + parseFloat(data[i].units)
       all_units_rr = all_units_rr + parseFloat(data[i].units_rr)
+
+      if(data[i].name == 'Директор предприятия') {
+        idd = 'director'
+      }
+
 
       if (data[i].employer2 != '') {
         dep_temp_pos = dep_temp_pos + 1
@@ -123,7 +129,7 @@ function getdata() {
 
 
 
-      $('tbody').append('<tr style="' + pos_free + pos_dis + '" onclick="open_for_upd(' + data[i].id + ',' + data[i].bound_regrepl_id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name +  "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr +  '</td><td сlass="level_rr">' + data[i].level_rr + '</td><td style="' + cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name  +  '</td><td class="payment_rr" >' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
+      $('tbody').append('<tr style="' + pos_free + pos_dis + '" onclick="open_for_upd(' + data[i].id + ',' + data[i].bound_regrepl_id + ')"class="notcaption" id=' + data[i].id + '><td class="pname">' +  data[i].name +  "</td><td class='units'>" + data[i].units + '</td><td class="level">' + data[i].level + '</td><td style="' + cat_color + '" class="cat">'+ data[i].cat__name + '</td><td class="payment ' + idd + '">' + data[i].payment + '</td><td class="salary">' + salary + '</td><td class="salary">' + salary + '</td><td class="units_rr">' + data[i].units_rr +  '</td><td сlass="level_rr">' + data[i].level_rr + '</td><td style="' + cat_rr_color + '" class="cat_rr">' + data[i].cat_rr__name  +  '</td><td  class="payment_rr ' + idd + ' " >' + data[i].payment_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="salary_rr">' + salary_rr + '</td><td class="rc_employer  employer1">' + data[i].employer1 + '</td><td class="rc_employer  employer2">' + data[i].employer2 +'</td><td class="rc_employer  employer3">' + data[i].employer3 + '</td><td class="comm">' + data[i].comm +  '</td></tr>')
 
 if (i != data.length-1) {
       if (data[i+1].subdep__name &&  data[i].subdep__name != data[i+1].subdep__name ) {
@@ -235,6 +241,10 @@ setTimeout(() => $('.diritogo').css('border', '1px solid white'), 3000)
 setTimeout(() => $('.all_itog').css('font-size', '14pt'), 3000)
 setTimeout(() => $('.all_itog').css('background', 'green'), 3000)
 setTimeout(() => $('.all_itog').css('font-weight', 'bold'), 3000)
+setTimeout(() => $('.all_itog').css('border', '1px solid white'), 3000)
+
+setTimeout(() => $('.director').text(''), 3000)
+
 setTimeout(() => $('.all_itog').css('border', '1px solid white'), 3000)
 
 setTimeout(() => $('.notcaption').css('border', '1px solid lightgrey'), 3000)
