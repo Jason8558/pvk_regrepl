@@ -1,7 +1,7 @@
 {% extends "RegRepl/index.html"%}
 {% load humanize %}
 {%load static%}
-{%block script%}<script src="{% static 'js/getregrepl.js'%}" charset="utf-8"></script>{%endblock%}
+{%block script%}<script src="{% static 'js/getregrepl1.js'%}" charset="utf-8"></script>{%endblock%}
 {%block header%}<h1>Штатное замещение за {{rr.duration|date:"d.m.Y"}} <button type="button" onclick="tableToExcel('regrepl_table','Штатное', 'Штатное замещение {{rr.duration|date:'d.m.Y'}}.xls');" name="button">Сформировать EXEL</button></h1>
 
 
@@ -62,7 +62,13 @@
   </table>
 </div>
 
+<div id="goto-click" class="goto-click">
+Переход
+</div>
 
+<div id="goto" class="goto">
+
+</div>
 
 <table id="regrepl_table" onscroll="">
   <thead>
@@ -101,6 +107,8 @@
 </div>
 
 <script type="text/javascript">
+
+
   $('#regrepl_table').ready(function () {
 
 
@@ -128,6 +136,8 @@
   			downloadURI(resuri, fileName);
   		}
   	})();
+
+
 
 </script>
 

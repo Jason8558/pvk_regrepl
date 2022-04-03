@@ -549,3 +549,25 @@ width: 100%;
 #excel-button a img {
 
 }
+
+.goto-click{
+    background: #5ebcff;
+    position: fixed;
+    left: -44px;
+    transform: rotate(90deg);
+font-size: 24pt;cursor: pointer;cursor: p;padding: 7px;border-top-left-radius: 14px;border-top-right-radius: 14px;}
+
+.goto-click:hover {box-shadow: 0px -5px 14px 0px #42dafc;background: #659abf;transition: 0.3s;}
+
+.goto {
+  display: none;
+
+background: #5ebcff;height: 490px;position: fixed;width: 419px;padding: 14px;z-index: 1;left: 0;top: 141px;border-top-right-radius: 14px;border-bottom-right-radius: 14px;box-shadow: 6px 0px 11px -1px;}
+
+.goto a {
+
+text-decoration: none;color: white;font-weight: bold;font-size: 16pt;}
+
+.goto p {
+
+text-align: center;margin-bottom: 17px;/* padding: 7px; */}

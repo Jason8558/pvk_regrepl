@@ -35,7 +35,8 @@ function getdata() {
 
     $.getJSON(query_url,  (data) => {
 
-      $('tbody').append('<tr class="dir" ><td colspan="17">' + data[0].dir__name + '</td></tr>')
+      $('tbody').append('<tr class="dir" ><td colspan="17"><a name="'+ data[0].dir_id +'"></a>' + data[0].dir__name + '</td></tr>')
+      $('#goto').append('<p><a href="#'+ data[0].dir_id +'">'+ data[0].dir__name +'</p>')
 
       $('tbody').append('<tr class="dep" ><td colspan="17">' + data[0].dep__name + '</td></tr>')
 
@@ -165,7 +166,8 @@ if (i != data.length-1) {
               dir_units_rr = dir_units_rr + dep_units_rr
               dir_temp_pos = dir_temp_pos + dep_temp_pos
               $('tbody').append( "<tr class=diritogo><td> Итого по: " + data[i].dir__name + " </td> <td>" + dir_units +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary) + "</td><td></td><td>"+ dir_units_rr +"</td><td></td><td></td><td></td><td>" + new Intl.NumberFormat('ru-RU').format(dir_salary_rr)+"</td> <td></td> <td></td><td>временных: "+ dir_temp_pos +"</td><td></td><td></td></tr> ")
-              $('tbody').append('<tr class="dir"  ><td colspan="17">' + data[i+1].dir__name + '</td></tr>')
+              $('tbody').append('<tr class="dir"  ><td colspan="17"><a name='+  data[i+1].dir_id +'></a>' + data[i+1].dir__name + '</td></tr>')
+              $('#goto').append('<p><a href="#'+ data[i+1].dir_id +'">'+ data[i+1].dir__name +'</p>')
               dir_salary = 0
               dir_salary_rr = 0
               dir_units = 0
@@ -248,6 +250,14 @@ setTimeout(() => $('.director').text(''), 3000)
 setTimeout(() => $('.all_itog').css('border', '1px solid white'), 3000)
 
 setTimeout(() => $('.notcaption').css('border', '1px solid lightgrey'), 3000)
+
+setTimeout(() => $('#goto p a').click(function(){
+  $('#goto').css('display','none')
+}),3000)
+
+setTimeout(() => $('#goto-click').click(function(){
+  $('#goto').css('display','block')
+}),3000)
 
 
     }
