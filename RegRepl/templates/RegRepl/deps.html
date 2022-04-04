@@ -1,7 +1,7 @@
 {% extends "RegRepl/index.html"%}
 {%load static%}
 {%block title%}Отделы{%endblock%}
-{%block header%}Отделы{%endblock%}
+{%block header%}<a class="button-back-header" href="..">< НАЗАД </a> <h1>Отделы</h1>{%endblock%}
 {%block script%}<script src="{% static 'js/newdep.js'%}" charset="utf-8"></script>{%endblock%}
 
 
@@ -10,16 +10,16 @@
 
 </script>
 <div class="container deps">
-  <button onclick="open_for_add()" type="button" name="button">+ Новый отдел</button>
+  <button onclick="open_for_add()" class="new-button" type="button" name="button">+ Новый отдел</button>
 <div style="left: -999px;" class="frame newdep-frame">
   <iframe id="nd_frame" src="/deps/new" width="550" height="550"></iframe>
   <button onclick="nd_send_submit()" class="button" type="button" name="nd-frame-sbutton"> Добавить отдел </button>
   <button type="button" onclick="nd_frame_cancelbtn()" class="button cancel" name="button"> Отмена </button>
 </div>
 
-<table >
+<table class="not_regrepl_table">
   <thead>
-  <tr><th>Название</th><th>Относится к..</th></tr>
+  <tr><th>Код</th><th>Название</th><th>Относится к..</th></tr>
 
 
   </thead>

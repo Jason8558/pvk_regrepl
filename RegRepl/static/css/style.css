@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  font-family: Roboto;
+  font-family: sans-serif;
 }
 
 input[type=text], input[type=number], input[type=date], input[type=search], textarea, select {
@@ -61,7 +61,7 @@ header a:hover {
     background: silver;
     box-shadow: 0px 0px 3px 2px #cdf2cd;
     transition: 0.3s;
-}
+/* float: left; */}
 
 .button-back {
 
@@ -79,6 +79,8 @@ text-decoration: none;
 
 border-radius: 12px;
 }
+
+.button-back-header {margin-right: 24px;background: #1e6ea6;padding: 12px;text-decoration: none;color: white;border-radius: 14px;float: left;}
 
 header div {
 height: 100%;
@@ -221,6 +223,10 @@ border-collapse: collapse;
 border: 1px solid black;
 
 background: #ffffff;
+}
+
+.not_regrepl_table tr:nth-child(even){
+background: #b7d2e5;
 }
 
 .rc_employer {
@@ -553,7 +559,7 @@ width: 100%;
 .goto-click{
     background: #5ebcff;
     position: fixed;
-    left: -44px;
+    left: -46px;
     transform: rotate(90deg);
 font-size: 24pt;cursor: pointer;cursor: p;padding: 7px;border-top-left-radius: 14px;border-top-right-radius: 14px;}
 
@@ -562,7 +568,7 @@ font-size: 24pt;cursor: pointer;cursor: p;padding: 7px;border-top-left-radius: 1
 .goto {
   display: none;
 
-background: #5ebcff;height: 490px;position: fixed;width: 419px;padding: 14px;z-index: 1;left: 0;top: 141px;border-top-right-radius: 14px;border-bottom-right-radius: 14px;box-shadow: 6px 0px 11px -1px;}
+background: #5ebcff;height: 490px;position: fixed;width: 419px;padding: 14px;z-index: 1;left: 0;top: 135px;border-top-right-radius: 14px;border-bottom-right-radius: 14px;box-shadow: 6px 0px 11px -1px;}
 
 .goto a {
 
@@ -571,3 +577,42 @@ text-decoration: none;color: white;font-weight: bold;font-size: 16pt;}
 .goto p {
 
 text-align: center;margin-bottom: 17px;/* padding: 7px; */}
+
+.regrepl {
+
+background: #cdf2cd;padding: 10px;border-radius: 14px;width: 216px;text-align: center;line-height: 37px;margin-right: 9px;transition: 0.3s;margin-bottom: 9px;cursor: pointer;}
+
+.regrepl:hover, .main_div a:hover {background: aliceblue;box-shadow: 0px 0px 11px 0px #cdf2cd;transition: 0.3s;}
+
+.subcontainer {
+
+display: flex;flex-wrap: wrap;}
+
+.main_div {
+
+float: left;position: absolute;background: #c7c9c7;height: 220px;width: 235px;border-radius: 18px;padding: 6px;;left: 43px;}
+
+.main_div a {
+
+width: 100%;float: left;text-align: center;background: #cdf2cd;border-radius: 14px;margin-bottom: 7px;padding: 2px;box-sizing: border-box;text-decoration: none;text-transform: uppercase;color: black;font-size: 19pt;}
+
+.main_div h2 {
+  text-transform: uppercase;
+  border-bottom: 1px solid black;
+  text-align: center;
+  margin-bottom: 46px;
+}
+
+#inthismoment {
+  
+position: absolute;top: 360px;}
+
+#excel-click {
+  left: -157px;
+top: 453px;
+background: #a3f7a3;
+}
+
+.new-button {
+
+width: 100%;background: #1e6ea6;padding: 10px;color: white;border-radius: 14px;border-style: none;text-transform: uppercase;font-weight: bold;}

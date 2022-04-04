@@ -29,7 +29,10 @@ function deps_get() {
   $('tbody').find('tr').remove()
 $.getJSON('/getdeps/', (data) => {
     $.each(data, (i, val) => {
-         $('tbody').append("<tr class='notcaption'><td>" + val.name + "</td><td>" + val.dirdepartament__name + "</td></tr>")
+
+
+         $('tbody').append("<tr id="+ val.id + "><td>" + val.id + "</td><td>" + val.name + "</td><td>" + val.dirdepartament__name + "</td></tr>")
+         $('#' + val.id).attr('onclick', 'location.href=' + "'/admin/RegRepl/departament/" + val.id + "/change/'")
 
 })
 })

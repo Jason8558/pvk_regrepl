@@ -16,7 +16,12 @@ def index(request):
     if request.user.is_authenticated:
         RegRepls = RegularReplacement.objects.all()
         locations = Location.objects.all()
-        return render(request,'RegRepl/index.html', context={'RegRepls':RegRepls, 'locs':locations})
+        LastRR = RegularReplacement.objects.latest('id').id
+        Total = RegularReplacementPos.objects.filter(bound_regrepl=LastRR)
+        busy = Total.filter(free=0)
+        free = Total.filter(free=1)
+
+        return render(request,'RegRepl/index.html', context={'RegRepls':RegRepls, 'locs':locations, 'total':len(Total), 'busy':len(busy), 'free':len(free)})
     else:
         return redirect('/accounts/login')
 
