@@ -600,12 +600,12 @@ width: 100%;float: left;text-align: center;background: #cdf2cd;border-radius: 14
   text-transform: uppercase;
   border-bottom: 1px solid black;
   text-align: center;
-  margin-bottom: 46px;
+  margin-bottom: 47px;
 }
 
 #inthismoment {
-  
-position: absolute;top: 360px;}
+
+position: absolute;top: 360px;/* line-height: 26px; */}
 
 #excel-click {
   left: -157px;
@@ -616,3 +616,11 @@ background: #a3f7a3;
 .new-button {
 
 width: 100%;background: #1e6ea6;padding: 10px;color: white;border-radius: 14px;border-style: none;text-transform: uppercase;font-weight: bold;}
+
+#inthismoment p {
+
+font-size: 16pt;}
+
+#inthismoment span {
+  color: #5459ff;
+text-decoration: underline;text-shadow: 0 0 1px black;}

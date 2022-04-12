@@ -333,7 +333,7 @@ def regrepl_json(request, type, id, rr):
             'free',
             'comm',
             'disabled' ,
-            'is_head').order_by('dir_id__iter', 'dep_id__iter', 'subdep_id', 'cat_id', '-payment', 'name')
+            'is_head').order_by('dir_id__iter', 'dep_id__iter', 'subdep_id', 'cat_id', '-payment', 'name', 'employer1')
 
             positions = list(positions)
         if type == 6:
