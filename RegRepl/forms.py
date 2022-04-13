@@ -74,7 +74,8 @@ class RegularReplacementPos_form(forms.ModelForm):
         employer3 = self.cleaned_data["employer3"],
         free = self.cleaned_data["free"],
         comm = self.cleaned_data["comm"],
-        disabled = self.cleaned_data["disabled"] )
+        disabled = self.cleaned_data["disabled"],
+        is_head = self.cleaned_data["is_head"] )
     def saveUpd(self, pos, dir, dep, subdep):
         upd_position = RegularReplacementPos.objects.filter(id=pos).update(
 
@@ -97,7 +98,8 @@ class RegularReplacementPos_form(forms.ModelForm):
                 employer3 = self.cleaned_data["employer3"],
                 free = self.cleaned_data["free"],
                 comm = self.cleaned_data["comm"],
-                disabled = self.cleaned_data["disabled"] )
+                disabled = self.cleaned_data["disabled"],
+                is_head = self.cleaned_data["is_head"] )
 
 class Departament_form(forms.ModelForm):
     class Meta:
