@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 import datetime as DT
 from itertools import groupby
 from django.contrib.auth.models import *
-from django.db.models import Q
+from django.db.models import Q, Sum
 from collections import defaultdict
 import xlwt
 import os
@@ -17,11 +17,12 @@ def index(request):
         RegRepls = RegularReplacement.objects.all()
         locations = Location.objects.all()
         LastRR = RegularReplacement.objects.latest('id').id
+        Total2 = RegularReplacementPos.objects.filter(bound_regrepl=LastRR).aggregate(Total2=Sum('units'))
         Total = RegularReplacementPos.objects.filter(bound_regrepl=LastRR)
         busy = Total.filter(free=0)
         free = Total.filter(free=1)
 
-        return render(request,'RegRepl/index.html', context={'RegRepls':RegRepls, 'locs':locations, 'total':len(Total), 'busy':len(busy), 'free':len(free)})
+        return render(request,'RegRepl/index.html', context={'RegRepls':RegRepls, 'locs':locations, 'total':Total2.get('Total2'), 'busy':len(busy), 'free':len(free)})
     else:
         return redirect('/accounts/login')
 
@@ -38,6 +39,7 @@ def regrepl_create(request, id):
         notinsectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(subdep=None).order_by('cat','id','dir')
         insectors = RegularReplacementPos.objects.filter(bound_regrepl=id).filter(~Q(subdep=0)).order_by('dir').order_by('cat')
         all = RegularReplacementPos.objects.filter(bound_regrepl=id)
+        all2 = RegularReplacementPos.objects.filter(bound_regrepl=id).aggregate(all2=Sum('units'))
         all_salary_itogo = 0
         all_salaryrr_itogo = 0
         all_units_itogo = 0
@@ -156,7 +158,7 @@ def regrepl_create(request, id):
     'd_salary_rr':d_salary_rr,
     'd_units':d_units,
     'd_units_rr':d_units_rr,
-        'd':d,'count':count, 'rr':RegRepl, 'positions':notinsectors, 'insectors':insectors, 'dirs':dirs, 'deps':deps, 'subdeps':subdeps, 'not_free_pos_cnt':not_free_pos_cnt, 'temp_pos':len(temp_pos)})
+        'd':d,'count':all2.get('all2'), 'rr':RegRepl, 'positions':notinsectors, 'insectors':insectors, 'dirs':dirs, 'deps':deps, 'subdeps':subdeps, 'not_free_pos_cnt':not_free_pos_cnt, 'temp_pos':len(temp_pos)})
     else:
         return redirect('/accounts/login')
 
