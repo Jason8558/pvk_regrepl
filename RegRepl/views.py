@@ -270,7 +270,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by( 'dep_id',  'subdep_id', 'cat_id', 'id')
+            'disabled' ).order_by('dir_id__iter', 'dep_id__iter', 'subdep_id','-is_head', 'cat_id', 'name',  '-payment', 'employer1' )
             positions = list(positions)
             return JsonResponse(positions, safe=False)
         if type == 2:
@@ -291,7 +291,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('cat_id', 'subdep_id','cat_id','dep_id', 'id')
+            'disabled' ).order_by('dir_id__iter', 'dep_id__iter', 'subdep_id','-is_head', 'cat_id', 'name',  '-payment', 'employer1' )
             positions = list(positions)
         if type == 4:
             positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(cat_id=id).values('id','name', 'bound_regrepl_id', 'dir__name', 'dep','dep__name', 'subdep__name', 'units',
@@ -311,7 +311,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('cat_id','dep_id', 'id', 'cat_id',  'subdep_id')
+            'disabled' ).order_by('dir_id__iter', 'dep_id__iter', 'subdep_id','-is_head', 'cat_id', 'name',  '-payment', 'employer1' )
             positions = list(positions)
         if type == 5:
 
@@ -355,7 +355,7 @@ def regrepl_json(request, type, id, rr):
             'employer3',
             'free',
             'comm',
-            'disabled' ).order_by('cat_id', 'dir_id',  'dep_id', 'subdep_id',   'id' )
+            'disabled' ).order_by('dir_id__iter', 'dep_id__iter', 'subdep_id','-is_head', 'cat_id', 'name',  '-payment', 'employer1' )
             print(positions)
             positions = list(positions)
 
@@ -378,7 +378,7 @@ def regrepl_json(request, type, id, rr):
                 'employer3',
                 'free',
                 'comm',
-                'disabled' ).order_by('dir_id',  'dep_id',  'subdep_id', 'cat_id', 'id' )
+                'disabled' ).order_by('dir_id__iter', 'dep_id__iter', 'subdep_id','-is_head', 'cat_id', 'name',  '-payment', 'employer1' )
             else:
                 positions = RegularReplacementPos.objects.filter(bound_regrepl=rr).filter(name__contains='ЕМР').values('bound_regrepl_id', 'id','name', 'dir_id', 'dir__name', 'dep','dep__name', 'subdep' ,'subdep__name', 'units',
                 'level',
@@ -397,7 +397,7 @@ def regrepl_json(request, type, id, rr):
                 'employer3',
                 'free',
                 'comm',
-                'disabled' ).order_by('dir_id',  'dep_id',  'subdep_id', 'cat_id', 'id' )
+                'disabled' ).order_by('dir_id__iter', 'dep_id__iter', 'subdep_id','-is_head', 'cat_id', 'name',  '-payment', 'employer1' )
             print(positions)
             positions = list(positions)
 
